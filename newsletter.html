@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Newsletter | KYNTRIX</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-content">
+        <div class="logo">KYNTRIX</div>
+        <nav class="nav-links">
+          <a href="index.html#services">Services</a>
+          <a href="index.html#industries">Industries</a>
+          <a href="index.html#approach">Approach</a>
+          <a href="index.html#cases">Case Studies</a>
+          <a href="newsletter.html" class="active">Newsletter</a>
+          <a href="index.html#contact" class="cta">Work With Us</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-content">
+          <div class="hero-text">
+            <p class="eyebrow">Stay Informed</p>
+            <h1>Our Latest Newsletter</h1>
+            <p class="hero-subtitle">
+              Keep up with the latest technology trends, insights, and updates from Kyntrix Technology Solutions.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="newsletter-section">
+        <div class="container">
+          <div class="section-header fade-in-section">
+            <p class="eyebrow">Current Issue</p>
+            <h2>January 2026 Newsletter</h2>
+          </div>
+          
+          <div class="newsletter-content">
+            <div class="newsletter-preview fade-in-section">
+              <h3>Preview</h3>
+              <div class="preview-container">
+                <iframe src="newsletter/202601.pdf" width="100%" height="600px" frameborder="0"></iframe>
+              </div>
+              <p class="preview-note">If the preview doesn't load, please use the download link below.</p>
+            </div>
+            
+            <div class="newsletter-downloads fade-in-section">
+              <h3>Download Newsletter</h3>
+              <div class="download-list">
+                <div class="download-item">
+                  <span class="download-date">January 2026</span>
+                  <a href="newsletter/202601.pdf" class="button primary" download>Download PDF</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <div class="logo">KYNTRIX</div>
+        <div class="company-info">
+          <p>Kyntrix Technology Solutions Ltd.</p>
+          <p>Edmonton, Alberta, Canada</p>
+          <p>Email: <a href="mailto:info@kyntrixtech.com">info@kyntrixtech.com</a></p>
+          <p>Facebook: <a href="https://www.facebook.com/share/1Dvo37dr7r/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">Follow us on Facebook</a></p>
+        </div>
+        <p class="footer-meta">© <span id="year"></span> KYNTRIX. All rights reserved.</p>
+        <div class="footer-divider"></div>
+        <p class="land-acknowledgement"><strong>The land:</strong> We respectfully acknowledge that Kyntrix Technology Solutions Ltd. is in Treaty 6 and on the traditional lands of the Cree, Blackfoot, Iroquois, Dene (DEN–Ē), Nakota Sioux, Métis and Saulteaux (SO-TO), Anishinaabe (ANISH-A-NAUBY) /Ojibway (OJIB-WĒ) nations. This is also the area of Métis homelands and Métis Nation of Alberta Region 4. We acknowledge and respect the past, present, and future generations of all First Nations, Inuit and Métis People who continue to strengthen our community.  </p>
+      </div>
+    </footer>
+
+    <script>
+      // Update year
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Header scroll effect
+      window.addEventListener('scroll', function() {
+        const header = document.querySelector('.site-header');
+        if (window.scrollY > 50) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      });
+
+      // Scroll animations
+      (function() {
+        const fadeInSections = document.querySelectorAll('.fade-in-section, .fade-in-left, .fade-in-right');
+        
+        function checkFadeIn() {
+          fadeInSections.forEach(section => {
+            const sectionRect = section.getBoundingClientRect();
+            // Calculate trigger point at bottom third of the viewport
+            const fadeOutTrigger = window.innerHeight * 0.67; // 67% from top = 33% from bottom
+            
+            if (sectionRect.top < fadeOutTrigger) {
+              section.classList.add('is-visible');
+            } else {
+              // When scrolling back up, remove is-visible class to trigger fade out
+              section.classList.remove('is-visible');
+            }
+          });
+        }
+        
+        // Initial check
+        checkFadeIn();
+        
+        // Check on scroll
+        window.addEventListener('scroll', checkFadeIn);
+      })();
+    </script>
+  </body>
+</html>
