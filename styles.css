@@ -1223,10 +1223,6 @@ html {
     gap: 1rem;
   }
 
-  .nav-links a:not(.cta) {
-    display: none;
-  }
-
   .hero {
     padding: 5rem 0 4rem;
   }
