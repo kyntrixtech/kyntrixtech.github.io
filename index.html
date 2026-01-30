@@ -10,6 +10,11 @@
     <header class="site-header">
       <div class="container header-content">
         <div class="logo">KYNTRIX</div>
+        <button class="menu-toggle" aria-label="Toggle menu">
+          <span class="menu-icon"></span>
+          <span class="menu-icon"></span>
+          <span class="menu-icon"></span>
+        </button>
         <nav class="nav-links">
           <a href="#services">Services</a>
           <a href="#industries">Industries</a>
@@ -411,6 +416,28 @@
           header.classList.add('scrolled');
         } else {
           header.classList.remove('scrolled');
+        }
+      });
+
+      // Mobile menu toggle
+      document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (menuToggle && navLinks) {
+          menuToggle.addEventListener('click', function() {
+            menuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+          });
+          
+          // Close menu when clicking on a link
+          const navItems = navLinks.querySelectorAll('a');
+          navItems.forEach(item => {
+            item.addEventListener('click', function() {
+              menuToggle.classList.remove('active');
+              navLinks.classList.remove('active');
+            });
+          });
         }
       });
 
