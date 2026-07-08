@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="theme-switcher.js"></script>
+    <title>KYNTRIX | Measure twice. Build once.</title>
+    <meta name="description" content="Edmonton-based technology partner for nonprofits, clinics, schools, and small businesses. We draw the plan before we bill the hour — fixed scope, transparent pricing." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      /* ============ Direction: "Blueprint" — a drawing set, not a brochure ============ */
+      :root {
+        --paper: #eef3f7;        /* drafting-paper blue-white */
+        --sheet: #ffffff;
+        --gridline: #d7e2ec;
+        --cyan: #1d4e89;         /* cyanotype blue — primary */
+        --cyan-deep: #143a68;
+        --ink: #1a2833;          /* graphite ink */
+        --ink-soft: #4d5d6a;
+        --redline: #c6301c;      /* revision-markup red — used sparingly */
+        --rule: #c2d2df;
+
+        --head: "Archivo", "Segoe UI", Arial, sans-serif;
+        --body: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+        --mono: "IBM Plex Mono", "Courier New", monospace;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: var(--body);
+        font-size: 1.0425rem;
+        line-height: 1.65;
+        color: var(--ink);
+        background:
+          repeating-linear-gradient(0deg, var(--gridline) 0 1px, transparent 1px 28px),
+          repeating-linear-gradient(90deg, var(--gridline) 0 1px, transparent 1px 28px),
+          var(--paper);
+      }
+
+      .container { width: min(1120px, 92%); margin: 0 auto; }
+      a { color: inherit; }
+
+      :focus-visible {
+        outline: 3px solid var(--redline);
+        outline-offset: 3px;
+      }
+
+      h1, h2, h3 { font-family: var(--head); line-height: 1.12; letter-spacing: -0.01em; }
+
+      /* ---- sheet header: every section is a numbered drawing ---- */
+      .sheet-tag {
+        font-family: var(--mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--cyan);
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        border-top: 2px solid var(--ink);
+        padding-top: 0.6rem;
+        margin-bottom: 1.5rem;
+      }
+      .sheet-tag .rev { color: var(--redline); }
+
+      h2 {
+        font-size: clamp(1.7rem, 3.3vw, 2.3rem);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.01em;
+        max-width: 26ch;
+      }
+      .section-lead { max-width: 62ch; color: var(--ink-soft); margin-top: 1rem; }
+
+      .sheet {
+        background: var(--sheet);
+        border: 1px solid var(--rule);
+        box-shadow: 0 1px 0 rgba(20, 40, 60, 0.06);
+        padding: 3.5rem clamp(1.5rem, 4vw, 3.5rem);
+        margin: 2.5rem auto;
+      }
+
+      .button {
+        display: inline-block;
+        font-family: var(--head);
+        font-weight: 600;
+        font-size: 0.98rem;
+        padding: 0.85rem 1.6rem;
+        border: 2px solid var(--cyan);
+        background: var(--cyan);
+        color: #fff;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.2s ease, color 0.2s ease;
+      }
+      .button:hover { background: var(--cyan-deep); border-color: var(--cyan-deep); }
+      .button.ghost { background: transparent; color: var(--cyan); }
+      .button.ghost:hover { background: rgba(29, 78, 137, 0.08); }
+
+      /* ============ Header ============ */
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: var(--sheet);
+        border-bottom: 2px solid var(--ink);
+      }
+      .header-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 0;
+      }
+      .logo {
+        font-family: var(--head);
+        font-weight: 800;
+        font-size: 1.2rem;
+        letter-spacing: 0.1em;
+        text-decoration: none;
+        color: var(--ink);
+        display: flex;
+        flex-direction: column;
+        line-height: 1.1;
+      }
+      .logo small {
+        font-family: var(--mono);
+        font-weight: 400;
+        font-size: 0.6rem;
+        letter-spacing: 0.18em;
+        color: var(--cyan);
+      }
+      .nav-links { display: flex; align-items: center; gap: 1.6rem; }
+      .nav-links a {
+        font-family: var(--mono);
+        font-size: 0.82rem;
+        letter-spacing: 0.04em;
+        color: var(--ink-soft);
+        text-decoration: none;
+      }
+      .nav-links a:hover { color: var(--cyan); }
+      .nav-links a.cta {
+        background: var(--cyan);
+        color: #fff;
+        padding: 0.55rem 1rem;
+      }
+      .nav-links a.cta:hover { background: var(--cyan-deep); color: #fff; }
+
+      .menu-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.4rem; }
+      .menu-toggle span { display: block; width: 22px; height: 2px; background: var(--ink); margin: 5px 0; transition: transform 0.25s ease, opacity 0.25s ease; }
+
+      /* ============ Hero ============ */
+      .hero { padding: 4.5rem 0 3rem; }
+      .hero-sheet {
+        background: var(--sheet);
+        border: 1px solid var(--rule);
+        padding: clamp(2rem, 5vw, 4rem);
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 3.5rem;
+        align-items: center;
+      }
+      /* dimension line above the headline — the one drafting flourish */
+      .dim {
+        font-family: var(--mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--cyan);
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        margin-bottom: 1.4rem;
+      }
+      .dim::before, .dim::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--cyan);
+        position: relative;
+      }
+      .dim::before { border-left: 1px solid var(--cyan); height: 9px; background: linear-gradient(var(--cyan), var(--cyan)) center / 100% 1px no-repeat; }
+      .dim::after { border-right: 1px solid var(--cyan); height: 9px; background: linear-gradient(var(--cyan), var(--cyan)) center / 100% 1px no-repeat; }
+
+      .hero h1 {
+        font-size: clamp(2.4rem, 5.2vw, 3.9rem);
+        font-weight: 800;
+        text-transform: uppercase;
+        margin-bottom: 1.3rem;
+      }
+      .hero h1 .rl {
+        color: var(--redline);
+        position: relative;
+      }
+      .hero-subtitle { color: var(--ink-soft); max-width: 50ch; margin-bottom: 2rem; }
+      .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+      .hero-note { margin-top: 1.1rem; font-family: var(--mono); font-size: 0.78rem; color: var(--ink-soft); }
+
+      /* ---- schematic ---- */
+      .schematic { width: 100%; height: auto; display: block; }
+      .schematic .draw {
+        stroke-dasharray: 600;
+        stroke-dashoffset: 600;
+        animation: draw-in 1.6s ease forwards 0.3s;
+      }
+      .schematic .draw2 { animation-delay: 0.9s; }
+      @keyframes draw-in { to { stroke-dashoffset: 0; } }
+      .schematic-caption {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+        margin-top: 0.8rem;
+        text-align: right;
+      }
+      .schematic-caption em { color: var(--redline); font-style: normal; }
+
+      /* ============ Services: detail callouts ============ */
+      .detail-grid { margin-top: 2.5rem; display: grid; gap: 0; border-top: 1px solid var(--rule); }
+      .detail {
+        display: grid;
+        grid-template-columns: 4.5rem 16rem 1fr;
+        gap: 2rem;
+        padding: 1.8rem 0;
+        border-bottom: 1px solid var(--rule);
+      }
+      .detail .marker {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        color: var(--cyan);
+        width: 2.6rem;
+        height: 2.6rem;
+        border: 1.5px solid var(--cyan);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: none;
+      }
+      .detail h3 { font-size: 1.12rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; }
+      .detail p { color: var(--ink-soft); max-width: 62ch; }
+      .detail .includes {
+        margin-top: 0.55rem;
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        color: var(--cyan);
+        line-height: 1.9;
+      }
+
+      /* ============ Who we serve ============ */
+      .who-grid { margin-top: 2.5rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+      .who-card {
+        border: 1px solid var(--rule);
+        border-left: 3px solid var(--cyan);
+        padding: 1.6rem;
+        background: var(--paper);
+      }
+      .who-card h3 { font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 0.5rem; }
+      .who-card p { font-size: 0.95rem; color: var(--ink-soft); }
+
+      /* ============ Process ============ */
+      .process-grid { margin-top: 2.5rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+      .step { border-top: 2px solid var(--ink); padding-top: 1rem; }
+      .step .idx { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.1em; color: var(--redline); }
+      .step h3 { font-size: 1.2rem; text-transform: uppercase; margin: 0.35rem 0 0.5rem; }
+      .step p { font-size: 0.94rem; color: var(--ink-soft); }
+
+      /* ============ Cases ============ */
+      .cases-band { background: var(--cyan-deep); color: #eaf1f8; }
+      .cases-band .sheet-tag { color: #9fc0e2; border-top-color: #eaf1f8; }
+      .cases-band .sheet-tag .rev { color: #f0a89c; }
+      .cases-band .section-lead { color: #b7cde3; }
+      .case-grid { margin-top: 2.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+      .case-card { border: 1px solid rgba(234, 241, 248, 0.3); padding: 1.9rem; }
+      .case-card h3 { font-size: 1.2rem; margin-bottom: 0.3rem; }
+      .case-meta {
+        font-family: var(--mono);
+        font-size: 0.74rem;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: #9fc0e2;
+        margin-bottom: 0.9rem;
+      }
+      .case-card p:not(.case-meta) { color: #c6d8ea; font-size: 0.96rem; }
+      .metrics {
+        margin-top: 2.75rem;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+        border-top: 1px solid rgba(234, 241, 248, 0.3);
+        padding-top: 2rem;
+      }
+      .metric-value { font-family: var(--head); font-weight: 800; font-size: 2.3rem; display: block; line-height: 1; }
+      .metric-label { display: block; margin-top: 0.45rem; font-size: 0.88rem; color: #b7cde3; max-width: 26ch; }
+
+      /* ============ Promises ============ */
+      .promise-grid { margin-top: 2.5rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+      .promise { border: 1px solid var(--rule); padding: 1.7rem; background: var(--paper); }
+      .promise h3 { font-size: 1.02rem; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 0.5rem; }
+      .promise h3::before { content: "✓ "; color: var(--redline); }
+      .promise p { font-size: 0.95rem; color: var(--ink-soft); }
+
+      /* ============ Contact ============ */
+      .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: start; margin-top: 2.5rem; }
+      .contact-direct { margin-top: 1.5rem; font-size: 0.95rem; color: var(--ink-soft); line-height: 2; }
+      .contact-direct a { color: var(--cyan); font-weight: 600; }
+      .contact-form { border: 1px solid var(--rule); border-top: 3px solid var(--redline); padding: 2rem; background: var(--paper); display: grid; gap: 1.05rem; }
+      .contact-form label { display: grid; gap: 0.35rem; font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; }
+      .contact-form input, .contact-form textarea {
+        font-family: var(--body);
+        font-size: 1rem;
+        padding: 0.7rem 0.85rem;
+        border: 1px solid var(--rule);
+        background: var(--sheet);
+        color: var(--ink);
+      }
+      .contact-form input:focus, .contact-form textarea:focus { outline: 2px solid var(--cyan); outline-offset: 0; }
+      .contact-form button { justify-self: start; }
+      #status { font-size: 0.88rem; color: var(--ink-soft); font-family: var(--body); text-transform: none; letter-spacing: 0; }
+
+      /* ============ Footer: the title block ============ */
+      .site-footer { padding: 3.5rem 0 2.5rem; }
+      .title-block {
+        background: var(--sheet);
+        border: 2px solid var(--ink);
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .tb-cell { padding: 0.9rem 1.1rem; border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
+      .tb-cell:nth-child(4n) { border-right: none; }
+      .tb-cell.wide { grid-column: span 2; }
+      .tb-label {
+        display: block;
+        font-family: var(--mono);
+        font-size: 0.62rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+        margin-bottom: 0.15rem;
+      }
+      .tb-value { font-size: 0.92rem; font-weight: 500; }
+      .tb-value a { color: var(--cyan); }
+      .tb-row-last .tb-cell { border-bottom: none; }
+      .land-acknowledgement {
+        max-width: 76ch;
+        margin-top: 2rem;
+        font-size: 0.88rem;
+        line-height: 1.8;
+        color: var(--ink-soft);
+      }
+      .land-acknowledgement strong { color: var(--ink); }
+      .footer-meta { margin-top: 1.5rem; font-family: var(--mono); font-size: 0.75rem; color: var(--ink-soft); }
+
+      /* ============ Reveal ============ */
+      .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.55s ease, transform 0.55s ease; }
+      .reveal.is-visible { opacity: 1; transform: none; }
+      .reveal { transition-delay: var(--d, 0ms); }
+
+      /* ============ Motion ============ */
+      @keyframes rise {
+        from { opacity: 0; transform: translateY(16px); }
+        to { opacity: 1; transform: none; }
+      }
+
+      /* hero entrance */
+      .hero-sheet > div:first-child > * { opacity: 0; animation: rise 0.55s ease forwards; }
+      .hero-sheet .dim { animation-delay: 0.1s; }
+      .hero-sheet h1 { animation-delay: 0.22s; }
+      .hero-sheet .hero-subtitle { animation-delay: 0.36s; }
+      .hero-sheet .hero-actions { animation-delay: 0.5s; }
+      .hero-sheet .hero-note { animation-delay: 0.64s; }
+
+      /* redline sweeps under "Build once." */
+      .hero h1 .rl { display: inline-block; }
+      .hero h1 .rl::after {
+        content: "";
+        display: block;
+        height: 3px;
+        background: var(--redline);
+        transform: scaleX(0);
+        transform-origin: left;
+        animation: sweep 0.5s ease forwards 1.05s;
+      }
+      @keyframes sweep { to { transform: scaleX(1); } }
+
+      /* sheet contents surface row by row once the sheet is in view */
+      .sheet .detail, .sheet .who-card, .sheet .step, .sheet .case-card, .sheet .promise, .sheet .metrics > div {
+        opacity: 0;
+        transform: translateY(14px);
+        transition: opacity 0.5s ease var(--d, 0ms), transform 0.5s ease var(--d, 0ms);
+      }
+      .sheet.is-visible .detail, .sheet.is-visible .who-card, .sheet.is-visible .step,
+      .sheet.is-visible .case-card, .sheet.is-visible .promise, .sheet.is-visible .metrics > div {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* the REV mark is stamped on */
+      .sheet-tag .rev { opacity: 0; }
+      .sheet.is-visible .sheet-tag .rev { animation: stamp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.45s; }
+      @keyframes stamp {
+        from { opacity: 0; transform: scale(1.7) rotate(-8deg); }
+        to { opacity: 1; transform: none; }
+      }
+
+      /* micro-interactions */
+      .button { transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease; }
+      .button:hover { transform: translateY(-2px); }
+      .detail { transition: background-color 0.25s ease; }
+      .detail:hover { background: var(--paper); }
+      .detail .marker { transition: background-color 0.25s ease, color 0.25s ease; }
+      .detail:hover .marker { background: var(--cyan); color: #fff; }
+      .who-card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+      .who-card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(20, 40, 60, 0.08); }
+      .case-card { transition: border-color 0.25s ease; }
+      .case-card:hover { border-color: #f0a89c; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .hero-sheet > div:first-child > *, .sheet-tag .rev, .sheet.is-visible .sheet-tag .rev { animation: none; opacity: 1; transform: none; }
+        .hero h1 .rl::after { animation: none; transform: scaleX(1); }
+        .sheet .detail, .sheet .who-card, .sheet .step, .sheet .case-card, .sheet .promise, .sheet .metrics > div { opacity: 1; transform: none; transition: none; }
+        .button:hover, .who-card:hover { transform: none; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .reveal { opacity: 1; transform: none; transition: none; }
+        .schematic .draw { animation: none; stroke-dashoffset: 0; }
+        * { transition-duration: 0.01ms !important; }
+      }
+
+      /* ============ Responsive ============ */
+      @media (max-width: 920px) {
+        .hero-sheet { grid-template-columns: 1fr; gap: 2.5rem; }
+        .detail { grid-template-columns: 3.2rem 1fr; }
+        .detail > div:last-child, .detail p { grid-column: 2; }
+        .process-grid { grid-template-columns: 1fr 1fr; }
+        .case-grid, .contact-grid { grid-template-columns: 1fr; }
+        .metrics { grid-template-columns: 1fr; gap: 1.75rem; }
+        .title-block { grid-template-columns: 1fr 1fr; }
+        .tb-cell:nth-child(4n) { border-right: 1px solid var(--ink); }
+        .tb-cell:nth-child(2n) { border-right: none; }
+      }
+      @media (max-width: 680px) {
+        .sheet { padding: 2.5rem 1.25rem; }
+        .who-grid, .promise-grid, .process-grid { grid-template-columns: 1fr; }
+        .menu-toggle { display: block; }
+        .header-content { position: relative; }
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: -4.5%;
+          right: -4.5%;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0;
+          background: var(--sheet);
+          border-bottom: 2px solid var(--ink);
+          padding: 0.5rem 4.5%;
+        }
+        .nav-links.active { display: flex; }
+        .nav-links a { padding: 0.85rem 0; }
+        .nav-links a.cta { text-align: center; margin: 0.5rem 0 1rem; }
+        .menu-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .title-block { grid-template-columns: 1fr; }
+        .tb-cell, .tb-cell:nth-child(4n), .tb-cell:nth-child(2n) { border-right: none; }
+        .tb-cell.wide { grid-column: span 1; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-content">
+        <a class="logo" href="#top">KYNTRIX <small>TECHNOLOGY SOLUTIONS LTD.</small></a>
+        <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+        <nav class="nav-links">
+          <a href="#services">Services</a>
+          <a href="#who">Who we serve</a>
+          <a href="#process">Process</a>
+          <a href="#cases">Case studies</a>
+          <a href="newsletter-blueprint.html">Newsletter</a>
+          <a href="#contact" class="cta">Book a free consult</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- ============ SHEET 01: Hero ============ -->
+      <section class="hero">
+        <div class="container">
+          <div class="hero-sheet">
+            <div>
+              <p class="dim">Project: your next system</p>
+              <h1>Measure twice.<br /><span class="rl">Build once.</span></h1>
+              <p class="hero-subtitle">
+                Kyntrix is an Edmonton technology partner for nonprofits, clinics,
+                schools, and small businesses. We draw the plan — scope, price,
+                milestones — before a single hour is billed.
+              </p>
+              <div class="hero-actions">
+                <a href="#contact" class="button">Book a free 30-minute consult</a>
+                <a href="#process" class="button ghost">Read the process</a>
+              </div>
+              <p class="hero-note">SHEET 01 OF 06 · NO OBLIGATION · PLAIN LANGUAGE</p>
+            </div>
+            <div>
+              <svg class="schematic" viewBox="0 0 460 340" role="img" aria-label="Schematic: Kyntrix works embedded between your people and your technology">
+                <!-- your people -->
+                <rect class="draw" x="20" y="30" width="180" height="64" fill="none" stroke="#1a2833" stroke-width="1.5" />
+                <text x="110" y="57" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="700" font-size="14" fill="#1a2833">YOUR PEOPLE</text>
+                <text x="110" y="77" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="#4d5d6a">staff · clients · funders</text>
+                <!-- your technology -->
+                <rect class="draw" x="260" y="30" width="180" height="64" fill="none" stroke="#1a2833" stroke-width="1.5" />
+                <text x="350" y="57" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="700" font-size="14" fill="#1a2833">YOUR TECHNOLOGY</text>
+                <text x="350" y="77" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="#4d5d6a">software · data · cloud</text>
+                <!-- kyntrix -->
+                <rect class="draw draw2" x="140" y="180" width="180" height="70" fill="#1d4e89" stroke="#1d4e89" stroke-width="1.5" />
+                <text x="230" y="210" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="800" font-size="16" fill="#ffffff">KYNTRIX</text>
+                <text x="230" y="230" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="#b7cde3">embedded with your team</text>
+                <!-- connectors -->
+                <path class="draw draw2" d="M 110 94 L 110 215 L 140 215" fill="none" stroke="#1d4e89" stroke-width="1.5" />
+                <path class="draw draw2" d="M 350 94 L 350 215 L 320 215" fill="none" stroke="#1d4e89" stroke-width="1.5" />
+                <text x="96" y="150" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="9" fill="#4d5d6a">plain language</text>
+                <text x="364" y="150" font-family="IBM Plex Mono, monospace" font-size="9" fill="#4d5d6a">code · data · cloud</text>
+                <!-- redline annotation -->
+                <path class="draw draw2" d="M 320 250 L 400 295" fill="none" stroke="#c6301c" stroke-width="1.2" />
+                <text x="230" y="320" font-family="IBM Plex Mono, monospace" font-size="10" fill="#c6301c">REV A: fixed scope — approved before build</text>
+              </svg>
+              <p class="schematic-caption">FIG. 1 — HOW WE FIT · <em>NOT TO SCALE</em></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SHEET 02: Services ============ -->
+      <section id="services" class="container">
+        <div class="sheet reveal">
+          <p class="sheet-tag"><span>Sheet 02 / 06</span><span>What we do</span><span class="rev">Rev A</span></p>
+          <h2>Five details, one standard.</h2>
+          <p class="section-lead">
+            Most clients start with one of these and grow into others. Every
+            service carries the same spec: fixed scope, transparent pricing,
+            and your data stays yours.
+          </p>
+          <div class="detail-grid">
+            <div class="detail">
+              <span class="marker">D-01</span>
+              <h3>Strategy &amp; consulting</h3>
+              <div>
+                <p>Figure out what to build, fix, or replace — before spending money on it. We map your technology against your goals and hand you a roadmap you own, whether or not you build with us.</p>
+                <p class="includes">IT roadmaps · digital transformation · process optimization · vendor-neutral selection</p>
+              </div>
+            </div>
+            <div class="detail">
+              <span class="marker">D-02</span>
+              <h3>Software &amp; apps</h3>
+              <div>
+                <p>Custom software, web applications, and mobile apps built for how your organization actually works — not how an off-the-shelf tool assumes it does.</p>
+                <p class="includes">custom software · web applications · iOS &amp; Android · accessible, responsive design</p>
+              </div>
+            </div>
+            <div class="detail">
+              <span class="marker">D-03</span>
+              <h3>Systems &amp; data</h3>
+              <div>
+                <p>Connect the systems you already have so information flows instead of getting re-typed. Migrations happen without losing a record or a day of service.</p>
+                <p class="includes">data infrastructure · system integration · API-first architecture · zero-downtime migration</p>
+              </div>
+            </div>
+            <div class="detail">
+              <span class="marker">D-04</span>
+              <h3>Cloud &amp; security</h3>
+              <div>
+                <p>Move to the cloud — or manage what's already there — with security and compliance drawn into the plan, not bolted on after an incident.</p>
+                <p class="includes">AWS, Azure &amp; Google Cloud · cost optimization · threat detection · encryption &amp; compliance</p>
+              </div>
+            </div>
+            <div class="detail">
+              <span class="marker">D-05</span>
+              <h3>Ongoing support</h3>
+              <div>
+                <p>After launch we keep things running: monitoring around the clock, maintenance, and a recovery plan tested before you ever need it.</p>
+                <p class="includes">24/7 monitoring · maintenance &amp; support · disaster recovery · DevOps automation</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SHEET 03: Who we serve ============ -->
+      <section id="who" class="container">
+        <div class="sheet reveal">
+          <p class="sheet-tag"><span>Sheet 03 / 06</span><span>Who we serve</span><span class="rev">Rev A</span></p>
+          <h2>Built for organizations where the budget is real and the stakes are people.</h2>
+          <div class="who-grid">
+            <div class="who-card">
+              <h3>Nonprofits &amp; social services</h3>
+              <p>Case management, donor systems, and reporting that satisfies funders without burying your staff in spreadsheets.</p>
+            </div>
+            <div class="who-card">
+              <h3>Health &amp; community care</h3>
+              <p>Systems that handle sensitive client data with the privacy and compliance rigour it demands.</p>
+            </div>
+            <div class="who-card">
+              <h3>Small businesses &amp; startups</h3>
+              <p>Software that grows with you — built affordably now, without the rebuild tax later.</p>
+            </div>
+            <div class="who-card">
+              <h3>Education &amp; training</h3>
+              <p>Learning platforms and administrative tools that work for instructors, students, and the people who support them.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SHEET 04: Process ============ -->
+      <section id="process" class="container">
+        <div class="sheet reveal">
+          <p class="sheet-tag"><span>Sheet 04 / 06</span><span>How an engagement runs</span><span class="rev">Rev A</span></p>
+          <h2>Four steps. You see the price before anything is built.</h2>
+          <div class="process-grid">
+            <div class="step">
+              <span class="idx">STEP 01</span>
+              <h3>Consult</h3>
+              <p>A free 30-minute conversation in plain language. We help you clarify needs and gaps — useful whether you work with us or not.</p>
+            </div>
+            <div class="step">
+              <span class="idx">STEP 02</span>
+              <h3>Plan</h3>
+              <p>A fixed scope, a transparent quote, and milestones you can hold us to. Nothing is billed until you approve it.</p>
+            </div>
+            <div class="step">
+              <span class="idx">STEP 03</span>
+              <h3>Build</h3>
+              <p>We work as an embedded extension of your team, with a working demo every week — no long silences, no big reveal at the end.</p>
+            </div>
+            <div class="step">
+              <span class="idx">STEP 04</span>
+              <h3>Run</h3>
+              <p>Launch, handover, and training for your people. Then monitoring, maintenance, and support for as long as you want us around.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SHEET 05: Cases ============ -->
+      <section id="cases" class="container">
+        <div class="sheet cases-band reveal">
+          <p class="sheet-tag"><span>Sheet 05 / 06</span><span>Case studies</span><span class="rev">As built</span></p>
+          <h2>Trusted with systems that could not go down.</h2>
+          <p class="section-lead">Our team's delivery record spans mission-critical programs across Asia-Pacific and North America.</p>
+          <div class="case-grid">
+            <article class="case-card">
+              <h3>Japanese telecom leader</h3>
+              <p class="case-meta">Data migration · Tokyo, Japan</p>
+              <p>Moved multiple petabytes of data for a national telecom provider without a single service interruption — 0.001% data discrepancy, and compliance reporting 45% faster after cutover.</p>
+            </article>
+            <article class="case-card">
+              <h3>AEON Credit Service APAC</h3>
+              <p class="case-meta">Credit platform modernization · Asia-Pacific</p>
+              <p>Designed and rolled out AEON's APAC credit card ecosystem — real-time underwriting and a unified customer experience across 12 markets on resilient cloud infrastructure.</p>
+            </article>
+          </div>
+          <div class="metrics">
+            <div><span class="metric-value">25+</span><span class="metric-label">Mission-critical programs launched</span></div>
+            <div><span class="metric-value">0</span><span class="metric-label">Major incidents across our managed environments</span></div>
+            <div><span class="metric-value">45%</span><span class="metric-label">Average time-to-value acceleration</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SHEET 06: Promises + contact ============ -->
+      <section id="contact" class="container">
+        <div class="sheet reveal">
+          <p class="sheet-tag"><span>Sheet 06 / 06</span><span>Specifications &amp; sign-off</span><span class="rev">For approval</span></p>
+          <h2>Four promises we put in writing.</h2>
+          <div class="promise-grid">
+            <div class="promise">
+              <h3>We work alongside you</h3>
+              <p>A dedicated, knowledgeable team embedded with yours — not a ticket queue on another continent.</p>
+            </div>
+            <div class="promise">
+              <h3>Transparent pricing &amp; milestones</h3>
+              <p>You see the full cost and schedule before work begins, and progress against it every week after.</p>
+            </div>
+            <div class="promise">
+              <h3>Small-organization affordability</h3>
+              <p>Scoped to real budgets. We'd rather build the right small thing than sell you a big one.</p>
+            </div>
+            <div class="promise">
+              <h3>Security first, every layer</h3>
+              <p>Cybersecurity principles, compliance standards, and continuous verification protect your data from day one.</p>
+            </div>
+          </div>
+
+          <div class="contact-grid">
+            <div>
+              <h2 style="margin-top: 0.5rem;">Book your free 30-minute consultation.</h2>
+              <p class="section-lead">
+                Tell us what's slow, broken, or missing. We'll help you clarify
+                your needs and map the best next steps — whether you choose to
+                work with us or not.
+              </p>
+              <div class="contact-direct">
+                <p>Prefer to reach out directly?</p>
+                <p>Email <a href="mailto:info@kyntrixtech.com">info@kyntrixtech.com</a></p>
+                <p>Call <a href="tel:+17802468079">+1 780-246-8079</a></p>
+              </div>
+            </div>
+            <form class="contact-form" action="https://script.google.com/macros/s/AKfycbzLo--WI79rsXY-3Q6JbwSwBjlnbHoNDQl6WC5_-oKUnOipgCLCA9ni1BpGU7NLNFO-/exec" method="POST">
+              <input type="hidden" name="theme" value="blueprint" />
+              <label>
+                Name
+                <input type="text" name="name" placeholder="Full name" autocomplete="name" />
+              </label>
+              <label>
+                Organization
+                <input type="text" name="organization" placeholder="Company, nonprofit, or agency" autocomplete="organization" />
+              </label>
+              <label>
+                Email
+                <input type="email" name="email" placeholder="you@organization.org" autocomplete="email" />
+              </label>
+              <label>
+                Message
+                <textarea name="message" rows="4" placeholder="What's slow, broken, or missing?"></textarea>
+              </label>
+              <button type="submit" class="button">Book my free consult</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ Footer: title block ============ -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="title-block">
+          <div class="tb-cell wide">
+            <span class="tb-label">Project</span>
+            <span class="tb-value">Kyntrix Technology Solutions Ltd.</span>
+          </div>
+          <div class="tb-cell">
+            <span class="tb-label">Location</span>
+            <span class="tb-value">Edmonton, AB · Treaty 6</span>
+          </div>
+          <div class="tb-cell">
+            <span class="tb-label">Rev</span>
+            <span class="tb-value">A — issued for use</span>
+          </div>
+          <div class="tb-row-last tb-cell wide">
+            <span class="tb-label">Address</span>
+            <span class="tb-value">9538, 107 Ave, Edmonton AB, T5H 0T7</span>
+          </div>
+          <div class="tb-row-last tb-cell">
+            <span class="tb-label">Contact</span>
+            <span class="tb-value"><a href="mailto:info@kyntrixtech.com">info@kyntrixtech.com</a><br /><a href="tel:+17802468079">+1 780-246-8079</a></span>
+          </div>
+          <div class="tb-row-last tb-cell">
+            <span class="tb-label">Elsewhere</span>
+            <span class="tb-value"><a href="https://www.facebook.com/share/1Dvo37dr7r/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">Facebook</a><br /><a href="newsletter-blueprint.html">Newsletter</a></span>
+          </div>
+        </div>
+        <p class="land-acknowledgement"><strong>The land:</strong> We respectfully acknowledge that Kyntrix Technology Solutions Ltd. is in Treaty 6 and on the traditional lands of the Cree, Blackfoot, Iroquois, Dene (DEN–Ē), Nakota Sioux, Métis and Saulteaux (SO-TO), Anishinaabe (ANISH-A-NAUBY) /Ojibway (OJIB-WĒ) nations. This is also the area of Métis homelands and Métis Nation of Alberta Region 4. We acknowledge and respect the past, present, and future generations of all First Nations, Inuit and Métis People who continue to strengthen our community.</p>
+        <p class="footer-meta">© <span id="year"></span> KYNTRIX. ALL RIGHTS RESERVED. · DRAWN WITH CARE IN EDMONTON.</p>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      (function () {
+        var toggle = document.querySelector(".menu-toggle");
+        var nav = document.querySelector(".nav-links");
+        if (!toggle || !nav) return;
+        toggle.addEventListener("click", function () {
+          var open = nav.classList.toggle("active");
+          toggle.classList.toggle("active", open);
+          toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+        nav.querySelectorAll("a").forEach(function (a) {
+          a.addEventListener("click", function () {
+            nav.classList.remove("active");
+            toggle.classList.remove("active");
+            toggle.setAttribute("aria-expanded", "false");
+          });
+        });
+      })();
+
+      (function () {
+        var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var items = document.querySelectorAll(".reveal");
+        if (reduced || !("IntersectionObserver" in window)) {
+          items.forEach(function (el) { el.classList.add("is-visible"); });
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        items.forEach(function (el) { io.observe(el); });
+      })();
+
+      (function () {
+        var form = document.querySelector(".contact-form");
+        if (!form) return;
+        var btn = form.querySelector('button[type="submit"]');
+        var status = document.createElement("p");
+        status.id = "status";
+        status.setAttribute("role", "status");
+        form.appendChild(status);
+        form.addEventListener("submit", function (ev) {
+          ev.preventDefault();
+          if (btn) btn.disabled = true;
+          status.textContent = "Sending…";
+          fetch(form.action, { method: "POST", body: new FormData(form), mode: "no-cors" })
+            .then(function () { window.location.href = "thanks-blueprint.html"; })
+            .catch(function () { status.textContent = "Network error — please try again, or email info@kyntrixtech.com."; })
+            .finally(function () { if (btn) btn.disabled = false; });
+        });
+      })();
+
+      // Stagger sheet contents left-to-right, top-to-bottom
+      (function () {
+        document.querySelectorAll(".sheet").forEach(function (sheet) {
+          var rows = sheet.querySelectorAll(".detail, .who-card, .step, .case-card, .promise, .metrics > div");
+          rows.forEach(function (el, i) {
+            el.style.setProperty("--d", (i * 80) + "ms");
+          });
+        });
+      })();
+
+      // Count up metrics when they scroll into view
+      (function () {
+        var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var els = document.querySelectorAll(".metric-value");
+        if (!els.length || reduced || !("IntersectionObserver" in window)) return;
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            io.unobserve(entry.target);
+            var el = entry.target;
+            var m = el.textContent.match(/^(\d+)(.*)$/);
+            if (!m) return;
+            var target = parseInt(m[1], 10);
+            var suffix = m[2];
+            var t0 = null;
+            var dur = 1200;
+            function tick(t) {
+              if (!t0) t0 = t;
+              var p = Math.min((t - t0) / dur, 1);
+              var eased = 1 - Math.pow(1 - p, 3);
+              el.textContent = Math.round(target * eased) + suffix;
+              if (p < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+          });
+        }, { threshold: 0.6 });
+        els.forEach(function (el) { io.observe(el); });
+      })();
+    </script>
+  </body>
+</html>

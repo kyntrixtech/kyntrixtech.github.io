@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="theme-switcher.js"></script>
+    <title>KYNTRIX | Technology help for organizations that can't afford surprises</title>
+    <meta name="description" content="Edmonton-based technology partner for nonprofits, clinics, schools, and small businesses. Custom software, data infrastructure, and ongoing support — with transparent pricing and milestones." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Besley:wght@600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+      /* ============ Tokens ============ */
+      :root {
+        --midnight: #152a42;      /* deep prairie evening blue */
+        --midnight-2: #0e1d30;    /* horizon depth */
+        --snow: #fafbfc;          /* light section background */
+        --paper: #ffffff;
+        --ink: #17222b;           /* body text on light */
+        --ink-soft: #47555f;
+        --wheat: #d9a441;         /* accent — Alberta gold */
+        --wheat-deep: #a3741a;    /* accessible gold for text on light */
+        --sky: #a9c3da;           /* muted text on dark */
+        --line: #dde4e9;
+        --line-dark: rgba(169, 195, 218, 0.22);
+
+        --display: "Besley", Georgia, serif;
+        --body: "Hanken Grotesk", "Segoe UI", Arial, sans-serif;
+        --mono: "IBM Plex Mono", "Courier New", monospace;
+
+        --measure: 62ch;
+        --radius: 6px;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: var(--body);
+        font-size: 1.0625rem;
+        line-height: 1.65;
+        color: var(--ink);
+        background: var(--paper);
+      }
+
+      .container { width: min(1120px, 92%); margin: 0 auto; }
+
+      a { color: inherit; }
+
+      :focus-visible {
+        outline: 3px solid var(--wheat);
+        outline-offset: 3px;
+        border-radius: 2px;
+      }
+
+      /* ============ Shared pieces ============ */
+      .eyebrow {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--wheat-deep);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+      }
+      .eyebrow::before {
+        content: "";
+        width: 2rem;
+        height: 2px;
+        background: var(--wheat);
+        flex: none;
+      }
+      .on-dark .eyebrow { color: var(--wheat); }
+
+      h1, h2, h3 { font-family: var(--display); line-height: 1.15; }
+
+      h2 {
+        font-size: clamp(1.75rem, 3.4vw, 2.4rem);
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        max-width: 24ch;
+      }
+
+      .section { padding: 5.5rem 0; }
+      .section + .section { border-top: 1px solid var(--line); }
+      .section-lead {
+        max-width: var(--measure);
+        color: var(--ink-soft);
+        margin-top: 1rem;
+      }
+
+      .button {
+        display: inline-block;
+        font-family: var(--body);
+        font-weight: 600;
+        font-size: 1rem;
+        padding: 0.85rem 1.6rem;
+        border-radius: var(--radius);
+        border: 2px solid transparent;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+      }
+      .button.primary {
+        background: var(--wheat);
+        border-color: var(--wheat);
+        color: var(--midnight-2);
+      }
+      .button.primary:hover { background: #e5b555; border-color: #e5b555; }
+      .button.ghost {
+        border-color: var(--line-dark);
+        color: var(--snow);
+      }
+      .button.ghost:hover { border-color: var(--sky); }
+      .button.ghost.on-light {
+        border-color: var(--line);
+        color: var(--ink);
+      }
+      .button.ghost.on-light:hover { border-color: var(--ink-soft); }
+
+      /* ============ Header ============ */
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: var(--midnight);
+        border-bottom: 1px solid var(--line-dark);
+      }
+      .header-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.1rem 0;
+      }
+      .logo {
+        font-family: var(--display);
+        font-weight: 800;
+        font-size: 1.25rem;
+        letter-spacing: 0.12em;
+        color: var(--snow);
+        text-decoration: none;
+      }
+      .logo .tld { color: var(--wheat); }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 1.75rem;
+      }
+      .nav-links a {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--sky);
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+      .nav-links a:hover { color: var(--snow); }
+      .nav-links a.cta {
+        color: var(--midnight-2);
+        background: var(--wheat);
+        padding: 0.5rem 1.05rem;
+        border-radius: var(--radius);
+        font-weight: 600;
+      }
+      .nav-links a.cta:hover { background: #e5b555; }
+
+      .menu-toggle {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.4rem;
+      }
+      .menu-toggle span {
+        display: block;
+        width: 22px;
+        height: 2px;
+        background: var(--snow);
+        margin: 5px 0;
+        transition: transform 0.25s ease, opacity 0.25s ease;
+      }
+
+      /* ============ Hero ============ */
+      .hero {
+        background: linear-gradient(180deg, var(--midnight) 0%, var(--midnight-2) 100%);
+        color: var(--snow);
+        padding: 5.5rem 0 6.5rem;
+        position: relative;
+        overflow: hidden;
+      }
+      /* the horizon line — a single gold thread across the hero's base */
+      .hero::after {
+        content: "";
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, var(--wheat) 30%, var(--wheat) 70%, transparent);
+      }
+      .hero-content {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 4rem;
+        align-items: center;
+      }
+      .hero h1 {
+        font-size: clamp(2.3rem, 5vw, 3.6rem);
+        font-weight: 800;
+        letter-spacing: -0.015em;
+        margin-bottom: 1.4rem;
+      }
+      .hero h1 em {
+        font-style: normal;
+        color: var(--wheat);
+      }
+      .hero-subtitle {
+        color: var(--sky);
+        max-width: 48ch;
+        margin-bottom: 2.2rem;
+      }
+      .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+      .hero-note {
+        margin-top: 1.1rem;
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        color: var(--sky);
+      }
+
+      /* ---- Signature: the sample engagement plan ---- */
+      .plan-card {
+        background: var(--snow);
+        color: var(--ink);
+        border-radius: var(--radius);
+        box-shadow: 0 24px 60px rgba(6, 14, 24, 0.45);
+        overflow: hidden;
+      }
+      .plan-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 1rem;
+        padding: 1.1rem 1.4rem;
+        background: var(--paper);
+        border-bottom: 2px solid var(--wheat);
+      }
+      .plan-head .plan-title {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .plan-head .plan-client {
+        font-size: 0.85rem;
+        color: var(--ink-soft);
+        text-align: right;
+      }
+      .plan-rows { list-style: none; }
+      .plan-rows li {
+        display: grid;
+        grid-template-columns: 5.2rem 1fr auto;
+        gap: 1rem;
+        align-items: baseline;
+        padding: 0.95rem 1.4rem;
+        border-bottom: 1px solid var(--line);
+        opacity: 0;
+        transform: translateY(8px);
+        animation: plan-row-in 0.5s ease forwards;
+      }
+      .plan-rows li:nth-child(1) { animation-delay: 0.25s; }
+      .plan-rows li:nth-child(2) { animation-delay: 0.45s; }
+      .plan-rows li:nth-child(3) { animation-delay: 0.65s; }
+      .plan-rows li:nth-child(4) { animation-delay: 0.85s; }
+      @keyframes plan-row-in {
+        to { opacity: 1; transform: none; }
+      }
+      .plan-rows .wk {
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--wheat-deep);
+        white-space: nowrap;
+      }
+      .plan-rows .what { font-weight: 600; font-size: 0.98rem; }
+      .plan-rows .what small {
+        display: block;
+        font-weight: 400;
+        font-size: 0.85rem;
+        color: var(--ink-soft);
+      }
+      .plan-rows .cost {
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        color: var(--ink-soft);
+        white-space: nowrap;
+      }
+      .plan-foot {
+        padding: 0.95rem 1.4rem;
+        font-size: 0.88rem;
+        color: var(--ink-soft);
+        background: var(--paper);
+      }
+      .plan-foot strong { color: var(--ink); }
+
+      /* ============ Services ledger ============ */
+      .ledger { margin-top: 3rem; border-top: 1px solid var(--line); }
+      .ledger-row {
+        display: grid;
+        grid-template-columns: 3.5rem 15rem 1fr;
+        gap: 2rem;
+        padding: 1.9rem 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .ledger-row .idx {
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        color: var(--wheat-deep);
+        padding-top: 0.3rem;
+      }
+      .ledger-row h3 {
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+      .ledger-row p {
+        color: var(--ink-soft);
+        max-width: var(--measure);
+      }
+      .ledger-row .includes {
+        margin-top: 0.6rem;
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        color: var(--ink-soft);
+        line-height: 1.9;
+      }
+
+      /* ============ Industries ============ */
+      .industries { background: var(--snow); }
+      .who-grid {
+        margin-top: 3rem;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+      .who-card {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 1.75rem;
+      }
+      .who-card h3 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+      .who-card p { font-size: 0.95rem; color: var(--ink-soft); }
+
+      /* ============ Process (01–04) ============ */
+      .process-grid {
+        margin-top: 3rem;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+        position: relative;
+      }
+      .process-grid::before {
+        content: "";
+        position: absolute;
+        top: 0.55rem;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--line);
+      }
+      .step { position: relative; padding-top: 1.6rem; }
+      .step::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1.1rem;
+        height: 1.1rem;
+        border-radius: 50%;
+        background: var(--wheat);
+        border: 3px solid var(--paper);
+        box-shadow: 0 0 0 1px var(--line);
+      }
+      .step .idx {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        color: var(--wheat-deep);
+        letter-spacing: 0.1em;
+      }
+      .step h3 { font-size: 1.25rem; margin: 0.3rem 0 0.5rem; }
+      .step p { font-size: 0.95rem; color: var(--ink-soft); }
+
+      /* ============ Cases + assurance ============ */
+      .cases { background: var(--midnight); color: var(--snow); }
+      .cases .section-lead { color: var(--sky); }
+      .case-grid {
+        margin-top: 3rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+      .case-card {
+        border: 1px solid var(--line-dark);
+        border-radius: var(--radius);
+        padding: 2rem;
+      }
+      .case-card h3 { font-size: 1.3rem; margin-bottom: 0.35rem; }
+      .case-meta {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--wheat);
+        margin-bottom: 1rem;
+      }
+      .case-card p:not(.case-meta) { color: var(--sky); font-size: 0.98rem; }
+
+      .metrics {
+        margin-top: 3.5rem;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+        border-top: 1px solid var(--line-dark);
+        padding-top: 2.5rem;
+      }
+      .metric-value {
+        font-family: var(--display);
+        font-weight: 800;
+        font-size: 2.4rem;
+        color: var(--wheat);
+        display: block;
+        line-height: 1;
+      }
+      .metric-label {
+        display: block;
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        color: var(--sky);
+        max-width: 26ch;
+      }
+
+      /* ============ Promises ============ */
+      .promise-grid {
+        margin-top: 3rem;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+      .promise {
+        padding: 2rem;
+        border-bottom: 1px solid var(--line);
+      }
+      .promise:nth-child(odd) { border-right: 1px solid var(--line); }
+      .promise:nth-last-child(-n+2) { border-bottom: none; }
+      .promise h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+      .promise p { font-size: 0.95rem; color: var(--ink-soft); }
+
+      /* ============ Contact ============ */
+      .contact { background: var(--snow); }
+      .contact-card {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: start;
+      }
+      .consultation-highlight {
+        font-family: var(--display);
+        font-weight: 700;
+        font-size: 1.3rem;
+        margin-top: 1.5rem;
+      }
+      .consultation-details {
+        color: var(--ink-soft);
+        max-width: 44ch;
+        margin-top: 0.6rem;
+      }
+      .contact-direct {
+        margin-top: 1.75rem;
+        font-size: 0.95rem;
+        color: var(--ink-soft);
+        line-height: 2;
+      }
+      .contact-direct a { color: var(--ink); font-weight: 600; }
+
+      .contact-form {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-top: 3px solid var(--wheat);
+        border-radius: var(--radius);
+        padding: 2rem;
+        display: grid;
+        gap: 1.1rem;
+      }
+      .contact-form label {
+        display: grid;
+        gap: 0.35rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+      .contact-form input,
+      .contact-form textarea {
+        font-family: var(--body);
+        font-size: 1rem;
+        padding: 0.7rem 0.85rem;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--snow);
+        color: var(--ink);
+      }
+      .contact-form input:focus,
+      .contact-form textarea:focus {
+        outline: 3px solid var(--wheat);
+        outline-offset: 0;
+        border-color: var(--wheat);
+      }
+      .contact-form button { justify-self: start; }
+      #status { font-size: 0.9rem; color: var(--ink-soft); }
+
+      /* ============ Footer ============ */
+      .site-footer {
+        background: var(--midnight-2);
+        color: var(--sky);
+        padding: 4rem 0 2.5rem;
+        font-size: 0.92rem;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        padding-bottom: 2.5rem;
+        border-bottom: 1px solid var(--line-dark);
+      }
+      .site-footer .logo { font-size: 1.1rem; }
+      .company-info { margin-top: 1rem; line-height: 1.9; }
+      .company-info a { color: var(--snow); }
+      .land-acknowledgement {
+        max-width: 70ch;
+        line-height: 1.8;
+      }
+      .land-acknowledgement strong { color: var(--snow); }
+      .footer-meta {
+        margin-top: 2rem;
+        font-family: var(--mono);
+        font-size: 0.78rem;
+      }
+
+      /* ============ Reveal on scroll ============ */
+      .reveal {
+        opacity: 0;
+        transform: translateY(16px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+      .reveal.is-visible { opacity: 1; transform: none; }
+      .reveal { transition-delay: var(--d, 0ms); }
+
+      /* ============ Motion ============ */
+      @keyframes rise {
+        from { opacity: 0; transform: translateY(16px); }
+        to { opacity: 1; transform: none; }
+      }
+
+      /* hero entrance — one orchestrated sequence */
+      .hero-text > * { opacity: 0; animation: rise 0.6s ease forwards; }
+      .hero-text .eyebrow { animation-delay: 0.1s; }
+      .hero-text h1 { animation-delay: 0.22s; }
+      .hero-text .hero-subtitle { animation-delay: 0.36s; }
+      .hero-text .hero-actions { animation-delay: 0.5s; }
+      .hero-text .hero-note { animation-delay: 0.64s; }
+
+      /* the plan card lands, then its rows are stamped in */
+      .plan-card { opacity: 0; animation: rise 0.7s ease forwards 0.35s; }
+      .plan-rows li:nth-child(1) { animation-delay: 0.75s; }
+      .plan-rows li:nth-child(2) { animation-delay: 0.92s; }
+      .plan-rows li:nth-child(3) { animation-delay: 1.09s; }
+      .plan-rows li:nth-child(4) { animation-delay: 1.26s; }
+
+      /* the gold horizon draws itself */
+      .hero::after { transform: scaleX(0); animation: horizon 1.2s ease forwards 1s; }
+      @keyframes horizon { to { transform: scaleX(1); } }
+
+      /* micro-interactions */
+      .button { transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease; }
+      .button:hover { transform: translateY(-2px); }
+      .ledger-row { transition: background-color 0.25s ease; }
+      .ledger-row:hover { background: #f1f5f8; }
+      .who-card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+      .who-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(23, 34, 43, 0.08); }
+      .promise { transition: background-color 0.25s ease; }
+      .promise:hover { background: var(--snow); }
+      .case-card { transition: border-color 0.25s ease, transform 0.25s ease; }
+      .case-card:hover { border-color: var(--wheat); transform: translateY(-3px); }
+
+      /* process dots pop in after their step reveals */
+      .step::before {
+        transform: scale(0);
+        transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transition-delay: calc(var(--d, 0ms) + 0.25s);
+      }
+      .step.is-visible::before { transform: scale(1); }
+
+      @media (prefers-reduced-motion: reduce) {
+        .hero-text > *, .plan-card, .hero::after { animation: none; opacity: 1; transform: none; }
+        .step::before, .step.is-visible::before { transform: scale(1); transition: none; }
+        .button:hover, .who-card:hover, .case-card:hover { transform: none; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .reveal { opacity: 1; transform: none; transition: none; }
+        .plan-rows li { animation: none; opacity: 1; transform: none; }
+        * { transition-duration: 0.01ms !important; }
+      }
+
+      /* ============ Responsive ============ */
+      @media (max-width: 920px) {
+        .hero-content { grid-template-columns: 1fr; gap: 3rem; }
+        .ledger-row { grid-template-columns: 3rem 1fr; }
+        .ledger-row p, .ledger-row .includes { grid-column: 2; }
+        .process-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem 2rem; }
+        .process-grid::before { display: none; }
+        .case-grid, .contact-card, .footer-grid { grid-template-columns: 1fr; }
+        .metrics { grid-template-columns: 1fr; gap: 2rem; }
+      }
+
+      @media (max-width: 680px) {
+        .section { padding: 4rem 0; }
+        .who-grid, .promise-grid, .process-grid { grid-template-columns: 1fr; }
+        .promise:nth-child(odd) { border-right: none; }
+        .promise:nth-last-child(-n+2) { border-bottom: 1px solid var(--line); }
+        .promise:last-child { border-bottom: none; }
+
+        .menu-toggle { display: block; }
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0;
+          background: var(--midnight-2);
+          border-bottom: 1px solid var(--line-dark);
+          padding: 0.5rem 4%;
+        }
+        .nav-links.active { display: flex; }
+        .nav-links a { padding: 0.9rem 0; }
+        .nav-links a.cta {
+          text-align: center;
+          margin: 0.5rem 0 1rem;
+        }
+        .header-content { position: relative; }
+        .menu-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        .plan-rows li { grid-template-columns: 4rem 1fr; }
+        .plan-rows .cost { grid-column: 2; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-content">
+        <a class="logo" href="#top">KYNTRIX<span class="tld">.</span></a>
+        <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="nav-links">
+          <a href="#services">Services</a>
+          <a href="#who">Who we serve</a>
+          <a href="#process">How it works</a>
+          <a href="#cases">Case studies</a>
+          <a href="newsletter-prairie.html">Newsletter</a>
+          <a href="#contact" class="cta">Book a free consult</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- ============ Hero ============ -->
+      <section class="hero on-dark">
+        <div class="container hero-content">
+          <div class="hero-text">
+            <p class="eyebrow">Edmonton · Treaty 6 Territory</p>
+            <h1>The technology team you don't have to <em>hire</em>.</h1>
+            <p class="hero-subtitle">
+              Kyntrix builds and runs software, websites, and data systems for
+              nonprofits, clinics, schools, and small businesses — working
+              alongside your people, at a price you approve before we start.
+            </p>
+            <div class="hero-actions">
+              <a href="#contact" class="button primary">Book a free 30-minute consult</a>
+              <a href="#process" class="button ghost">See how an engagement runs</a>
+            </div>
+            <p class="hero-note">No sales pitch. You leave with a clear next step either way.</p>
+          </div>
+
+          <!-- Signature: the sample engagement plan -->
+          <div class="hero-visual" aria-label="Sample engagement plan">
+            <div class="plan-card">
+              <div class="plan-head">
+                <span class="plan-title">Engagement plan · sample</span>
+                <span class="plan-client">Community health clinic, Edmonton</span>
+              </div>
+              <ul class="plan-rows">
+                <li>
+                  <span class="wk">WK 0</span>
+                  <span class="what">Consultation<small>Plain language, no obligation</small></span>
+                  <span class="cost">Free · 30 min</span>
+                </li>
+                <li>
+                  <span class="wk">WK 1</span>
+                  <span class="what">Scope &amp; fixed quote<small>Milestones you can hold us to</small></span>
+                  <span class="cost">$0 until approved</span>
+                </li>
+                <li>
+                  <span class="wk">WK 2–7</span>
+                  <span class="what">Build<small>Working demo every Friday</small></span>
+                  <span class="cost">Fixed price</span>
+                </li>
+                <li>
+                  <span class="wk">WK 8</span>
+                  <span class="what">Launch &amp; handover<small>Training for your team included</small></span>
+                  <span class="cost">Included</span>
+                </li>
+              </ul>
+              <div class="plan-foot">
+                <strong>No surprises.</strong> Every engagement starts with a page like this one.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Services ============ -->
+      <section id="services" class="section">
+        <div class="container">
+          <div class="reveal">
+            <p class="eyebrow">What we do</p>
+            <h2>Five ways we help, from first plan to daily operations.</h2>
+            <p class="section-lead">
+              Most clients start with one of these and grow into others. Every
+              service comes with the same rules: fixed scope, transparent
+              pricing, and your data stays yours.
+            </p>
+          </div>
+
+          <div class="ledger">
+            <div class="ledger-row reveal">
+              <span class="idx">S-01</span>
+              <h3>Strategy &amp; consulting</h3>
+              <div>
+                <p>Figure out what to build, fix, or replace — before spending money on it. We map your technology against your goals and give you a roadmap you own, whether or not you build with us.</p>
+                <p class="includes">IT roadmaps · digital transformation · process optimization · vendor-neutral technology selection</p>
+              </div>
+            </div>
+            <div class="ledger-row reveal">
+              <span class="idx">S-02</span>
+              <h3>Software &amp; apps</h3>
+              <div>
+                <p>Custom software, web applications, and mobile apps built for the way your organization actually works — not the way an off-the-shelf tool assumes it does.</p>
+                <p class="includes">custom software · web applications · iOS &amp; Android apps · accessible, responsive design</p>
+              </div>
+            </div>
+            <div class="ledger-row reveal">
+              <span class="idx">S-03</span>
+              <h3>Systems &amp; data</h3>
+              <div>
+                <p>Connect the systems you already have so information flows instead of getting re-typed. Migrations happen without losing a record or a day of service.</p>
+                <p class="includes">data infrastructure · system integration · API-first architecture · zero-downtime migration</p>
+              </div>
+            </div>
+            <div class="ledger-row reveal">
+              <span class="idx">S-04</span>
+              <h3>Cloud &amp; security</h3>
+              <div>
+                <p>Move to the cloud — or manage what's already there — with security and compliance handled from the start, not bolted on after an incident.</p>
+                <p class="includes">AWS, Azure &amp; Google Cloud · cost optimization · threat detection · encryption &amp; compliance</p>
+              </div>
+            </div>
+            <div class="ledger-row reveal">
+              <span class="idx">S-05</span>
+              <h3>Ongoing support</h3>
+              <div>
+                <p>After launch, we keep things running: monitoring around the clock, maintenance, and a recovery plan tested before you ever need it.</p>
+                <p class="includes">24/7 monitoring · maintenance &amp; support · disaster recovery · DevOps automation</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Who we serve ============ -->
+      <section id="who" class="section industries">
+        <div class="container">
+          <div class="reveal">
+            <p class="eyebrow">Who we serve</p>
+            <h2>Built for organizations where the budget is real and the stakes are people.</h2>
+          </div>
+          <div class="who-grid">
+            <div class="who-card reveal">
+              <h3>Nonprofits &amp; social services</h3>
+              <p>Case management, donor systems, and reporting that satisfies funders without burying your staff in spreadsheets.</p>
+            </div>
+            <div class="who-card reveal">
+              <h3>Health &amp; community care</h3>
+              <p>Systems that handle sensitive client data with the privacy and compliance rigour it demands.</p>
+            </div>
+            <div class="who-card reveal">
+              <h3>Small businesses &amp; startups</h3>
+              <p>Software that grows with you — built affordably now, without the rebuild tax later.</p>
+            </div>
+            <div class="who-card reveal">
+              <h3>Education &amp; training</h3>
+              <p>Learning platforms and administrative tools that work for instructors, students, and the people who support them.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Process ============ -->
+      <section id="process" class="section">
+        <div class="container">
+          <div class="reveal">
+            <p class="eyebrow">How an engagement runs</p>
+            <h2>Four steps. You see the price before anything is built.</h2>
+          </div>
+          <div class="process-grid">
+            <div class="step reveal">
+              <span class="idx">01</span>
+              <h3>Consult</h3>
+              <p>A free 30-minute conversation in plain language. We help you clarify needs and gaps — useful whether you work with us or not.</p>
+            </div>
+            <div class="step reveal">
+              <span class="idx">02</span>
+              <h3>Plan</h3>
+              <p>A fixed scope, a transparent quote, and milestones you can hold us to. Nothing is billed until you approve it.</p>
+            </div>
+            <div class="step reveal">
+              <span class="idx">03</span>
+              <h3>Build</h3>
+              <p>We work as an embedded extension of your team, with a working demo every week — no long silences, no big reveal at the end.</p>
+            </div>
+            <div class="step reveal">
+              <span class="idx">04</span>
+              <h3>Run</h3>
+              <p>Launch, handover, and training for your people. Then monitoring, maintenance, and support for as long as you want us around.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Case studies ============ -->
+      <section id="cases" class="section cases on-dark">
+        <div class="container">
+          <div class="reveal">
+            <p class="eyebrow">Case studies</p>
+            <h2>Trusted with systems that could not go down.</h2>
+            <p class="section-lead">
+              Our team's delivery record spans mission-critical programs across
+              Asia-Pacific and North America.
+            </p>
+          </div>
+          <div class="case-grid">
+            <article class="case-card reveal">
+              <h3>Japanese telecom leader</h3>
+              <p class="case-meta">Data migration · Tokyo, Japan</p>
+              <p>
+                Moved multiple petabytes of data for a national telecom provider
+                without a single service interruption — 0.001% data discrepancy,
+                and compliance reporting 45% faster after cutover.
+              </p>
+            </article>
+            <article class="case-card reveal">
+              <h3>AEON Credit Service APAC</h3>
+              <p class="case-meta">Credit platform modernization · Asia-Pacific</p>
+              <p>
+                Designed and rolled out AEON's APAC credit card ecosystem —
+                real-time underwriting and a unified customer experience across
+                12 markets on resilient cloud infrastructure.
+              </p>
+            </article>
+          </div>
+          <div class="metrics reveal">
+            <div>
+              <span class="metric-value">25+</span>
+              <span class="metric-label">Mission-critical programs launched</span>
+            </div>
+            <div>
+              <span class="metric-value">0</span>
+              <span class="metric-label">Major incidents across our managed environments</span>
+            </div>
+            <div>
+              <span class="metric-value">45%</span>
+              <span class="metric-label">Average time-to-value acceleration</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Promises ============ -->
+      <section class="section">
+        <div class="container">
+          <div class="reveal">
+            <p class="eyebrow">Why Kyntrix</p>
+            <h2>Four promises we put in writing.</h2>
+          </div>
+          <div class="promise-grid reveal">
+            <div class="promise">
+              <h3>We work alongside you</h3>
+              <p>A dedicated, knowledgeable team embedded with yours — not a ticket queue on another continent.</p>
+            </div>
+            <div class="promise">
+              <h3>Transparent pricing &amp; milestones</h3>
+              <p>You see the full cost and schedule before work begins, and progress against it every week after.</p>
+            </div>
+            <div class="promise">
+              <h3>Small-organization affordability</h3>
+              <p>Scoped to real budgets. We'd rather build the right small thing than sell you a big one.</p>
+            </div>
+            <div class="promise">
+              <h3>Security first, every layer</h3>
+              <p>Cybersecurity principles, compliance standards, and continuous verification protect your data from day one.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Contact ============ -->
+      <section id="contact" class="section contact">
+        <div class="container contact-card">
+          <div class="contact-content reveal">
+            <p class="eyebrow">Start here</p>
+            <h2>Book your free 30-minute consultation.</h2>
+            <p class="consultation-highlight">Week 0 costs nothing.</p>
+            <p class="consultation-details">
+              Tell us what's slow, broken, or missing. We'll help you clarify
+              your needs and map the best next steps — whether you choose to
+              work with us or not.
+            </p>
+            <div class="contact-direct">
+              <p>Prefer to reach out directly?</p>
+              <p>Email <a href="mailto:info@kyntrixtech.com">info@kyntrixtech.com</a></p>
+              <p>Call <a href="tel:+17802468079">+1 780-246-8079</a></p>
+            </div>
+          </div>
+          <form class="contact-form reveal" action="https://script.google.com/macros/s/AKfycbzLo--WI79rsXY-3Q6JbwSwBjlnbHoNDQl6WC5_-oKUnOipgCLCA9ni1BpGU7NLNFO-/exec" method="POST">
+            <input type="hidden" name="theme" value="prairie" />
+            <label>
+              Name
+              <input type="text" name="name" placeholder="Full name" autocomplete="name" />
+            </label>
+            <label>
+              Organization
+              <input type="text" name="organization" placeholder="Company, nonprofit, or agency" autocomplete="organization" />
+            </label>
+            <label>
+              Email
+              <input type="email" name="email" placeholder="you@organization.org" autocomplete="email" />
+            </label>
+            <label>
+              Message
+              <textarea name="message" rows="4" placeholder="What's slow, broken, or missing?"></textarea>
+            </label>
+            <button type="submit" class="button primary">Book my free consult</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <a class="logo" href="#top">KYNTRIX<span class="tld">.</span></a>
+            <div class="company-info">
+              <p>Kyntrix Technology Solutions Ltd.</p>
+              <p>9538, 107 Ave, Edmonton AB, T5H 0T7</p>
+              <p>Phone: <a href="tel:+17802468079">+1 780-246-8079</a></p>
+              <p>Email: <a href="mailto:info@kyntrixtech.com">info@kyntrixtech.com</a></p>
+              <p><a href="https://www.facebook.com/share/1Dvo37dr7r/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">Follow us on Facebook</a></p>
+            </div>
+          </div>
+          <p class="land-acknowledgement"><strong>The land:</strong> We respectfully acknowledge that Kyntrix Technology Solutions Ltd. is in Treaty 6 and on the traditional lands of the Cree, Blackfoot, Iroquois, Dene (DEN–Ē), Nakota Sioux, Métis and Saulteaux (SO-TO), Anishinaabe (ANISH-A-NAUBY) /Ojibway (OJIB-WĒ) nations. This is also the area of Métis homelands and Métis Nation of Alberta Region 4. We acknowledge and respect the past, present, and future generations of all First Nations, Inuit and Métis People who continue to strengthen our community.</p>
+        </div>
+        <p class="footer-meta">© <span id="year"></span> KYNTRIX. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Mobile menu
+      (function () {
+        var toggle = document.querySelector(".menu-toggle");
+        var nav = document.querySelector(".nav-links");
+        if (!toggle || !nav) return;
+        toggle.addEventListener("click", function () {
+          var open = nav.classList.toggle("active");
+          toggle.classList.toggle("active", open);
+          toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+        nav.querySelectorAll("a").forEach(function (a) {
+          a.addEventListener("click", function () {
+            nav.classList.remove("active");
+            toggle.classList.remove("active");
+            toggle.setAttribute("aria-expanded", "false");
+          });
+        });
+      })();
+
+      // Reveal on scroll — once, and only if motion is allowed
+      (function () {
+        var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var items = document.querySelectorAll(".reveal");
+        if (reduced || !("IntersectionObserver" in window)) {
+          items.forEach(function (el) { el.classList.add("is-visible"); });
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        items.forEach(function (el) { io.observe(el); });
+      })();
+
+      // Form submission
+      (function () {
+        var form = document.querySelector(".contact-form");
+        if (!form) return;
+        var btn = form.querySelector('button[type="submit"]');
+        var status = document.createElement("p");
+        status.id = "status";
+        status.setAttribute("role", "status");
+        form.appendChild(status);
+        form.addEventListener("submit", function (ev) {
+          ev.preventDefault();
+          if (btn) btn.disabled = true;
+          status.textContent = "Sending…";
+          fetch(form.action, { method: "POST", body: new FormData(form), mode: "no-cors" })
+            .then(function () { window.location.href = "thanks-prairie.html"; })
+            .catch(function () { status.textContent = "Network error — please try again, or email info@kyntrixtech.com."; })
+            .finally(function () { if (btn) btn.disabled = false; });
+        });
+      })();
+
+      // Stagger reveals within groups
+      (function () {
+        var groups = document.querySelectorAll(".ledger, .who-grid, .process-grid, .case-grid");
+        groups.forEach(function (g) {
+          g.querySelectorAll(".reveal").forEach(function (el, i) {
+            el.style.setProperty("--d", (i * 90) + "ms");
+          });
+        });
+      })();
+
+      // Count up metrics when they scroll into view
+      (function () {
+        var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var els = document.querySelectorAll(".metric-value");
+        if (!els.length || reduced || !("IntersectionObserver" in window)) return;
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            io.unobserve(entry.target);
+            var el = entry.target;
+            var m = el.textContent.match(/^(\d+)(.*)$/);
+            if (!m) return;
+            var target = parseInt(m[1], 10);
+            var suffix = m[2];
+            var t0 = null;
+            var dur = 1200;
+            function tick(t) {
+              if (!t0) t0 = t;
+              var p = Math.min((t - t0) / dur, 1);
+              var eased = 1 - Math.pow(1 - p, 3);
+              el.textContent = Math.round(target * eased) + suffix;
+              if (p < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+          });
+        }, { threshold: 0.6 });
+        els.forEach(function (el) { io.observe(el); });
+      })();
+    </script>
+  </body>
+</html>

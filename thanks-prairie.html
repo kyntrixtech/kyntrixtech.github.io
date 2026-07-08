@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="theme-switcher.js"></script>
+    <title>Inquiry received | KYNTRIX</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Besley:wght@600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --midnight: #152a42;
+        --midnight-2: #0e1d30;
+        --snow: #fafbfc;
+        --paper: #ffffff;
+        --ink: #17222b;
+        --ink-soft: #47555f;
+        --wheat: #d9a441;
+        --wheat-deep: #a3741a;
+        --sky: #a9c3da;
+        --line: #dde4e9;
+        --line-dark: rgba(169, 195, 218, 0.22);
+        --display: "Besley", Georgia, serif;
+        --body: "Hanken Grotesk", "Segoe UI", Arial, sans-serif;
+        --mono: "IBM Plex Mono", "Courier New", monospace;
+        --radius: 6px;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: var(--body); font-size: 1.0625rem; line-height: 1.65; color: var(--ink);
+        background: linear-gradient(180deg, var(--midnight) 0%, var(--midnight-2) 100%);
+        min-height: 100vh; display: flex; flex-direction: column;
+      }
+      .container { width: min(1120px, 92%); margin: 0 auto; }
+      a { color: inherit; }
+      :focus-visible { outline: 3px solid var(--wheat); outline-offset: 3px; border-radius: 2px; }
+      h1, h2 { font-family: var(--display); line-height: 1.15; }
+
+      .site-header { background: var(--midnight); border-bottom: 1px solid var(--line-dark); }
+      .header-content { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 0; }
+      .logo { font-family: var(--display); font-weight: 800; font-size: 1.25rem; letter-spacing: 0.12em; color: var(--snow); text-decoration: none; }
+      .logo .tld { color: var(--wheat); }
+      .back-link { font-size: 0.95rem; font-weight: 600; color: var(--sky); text-decoration: none; }
+      .back-link:hover { color: var(--snow); }
+
+      main { flex: 1; display: flex; align-items: center; padding: 4rem 0; }
+
+      /* confirmation styled like the engagement-plan artifact */
+      .confirm-card {
+        background: var(--snow); color: var(--ink);
+        max-width: 34rem; margin: 0 auto; border-radius: var(--radius);
+        box-shadow: 0 24px 60px rgba(6, 14, 24, 0.45); overflow: hidden;
+        opacity: 0; transform: translateY(16px);
+        animation: rise 0.6s ease forwards 0.15s;
+      }
+      @keyframes rise { to { opacity: 1; transform: none; } }
+      .confirm-head {
+        display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+        padding: 1.1rem 1.5rem; background: var(--paper); border-bottom: 2px solid var(--wheat);
+      }
+      .confirm-head .ttl { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; }
+      .confirm-head .st { font-family: var(--mono); font-size: 0.78rem; color: var(--wheat-deep); }
+      .confirm-body { padding: 1.75rem 1.5rem; }
+      .confirm-body h1 { font-size: 1.6rem; margin-bottom: 0.6rem; }
+      .confirm-body > p { color: var(--ink-soft); }
+
+      .confirm-rows { list-style: none; margin-top: 1.4rem; border-top: 1px solid var(--line); }
+      .confirm-rows li {
+        display: grid; grid-template-columns: 1.6rem 1fr auto; gap: 0.8rem; align-items: baseline;
+        padding: 0.85rem 0; border-bottom: 1px solid var(--line);
+        opacity: 0; transform: translateY(8px); animation: rise 0.5s ease forwards;
+      }
+      .confirm-rows li:nth-child(1) { animation-delay: 0.5s; }
+      .confirm-rows li:nth-child(2) { animation-delay: 0.7s; }
+      .confirm-rows li:nth-child(3) { animation-delay: 0.9s; }
+      .confirm-rows .mk { font-family: var(--mono); color: var(--wheat-deep); }
+      .confirm-rows .what { font-weight: 600; font-size: 0.97rem; }
+      .confirm-rows .when { font-family: var(--mono); font-size: 0.78rem; color: var(--ink-soft); white-space: nowrap; }
+
+      .confirm-actions { margin-top: 1.6rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+      .button {
+        display: inline-block; font-weight: 600; font-size: 1rem; padding: 0.8rem 1.5rem;
+        border-radius: var(--radius); text-decoration: none;
+        background: var(--wheat); color: var(--midnight-2);
+        transition: background-color 0.2s ease, transform 0.2s ease;
+      }
+      .button:hover { background: #e5b555; transform: translateY(-2px); }
+      .confirm-direct { font-size: 0.9rem; color: var(--ink-soft); }
+      .confirm-direct a { color: var(--wheat-deep); font-weight: 600; }
+
+      .site-footer { color: var(--sky); padding: 2rem 0; font-size: 0.85rem; border-top: 1px solid var(--line-dark); }
+      .site-footer .footer-inner { display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+      .site-footer a { color: var(--snow); }
+      .footer-meta { font-family: var(--mono); font-size: 0.75rem; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .confirm-card, .confirm-rows li { animation: none; opacity: 1; transform: none; }
+        .button:hover { transform: none; }
+        * { transition-duration: 0.01ms !important; }
+      }
+      @media (max-width: 680px) {
+        .confirm-rows li { grid-template-columns: 1.6rem 1fr; }
+        .confirm-rows .when { grid-column: 2; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-content">
+        <a class="logo" href="index-prairie.html">KYNTRIX<span class="tld">.</span></a>
+        <a class="back-link" href="index-prairie.html">&larr; Back to home</a>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <div class="confirm-card">
+          <div class="confirm-head">
+            <span class="ttl">Inquiry · received</span>
+            <span class="st">WK 0 — started</span>
+          </div>
+          <div class="confirm-body">
+            <h1>Your message is in.</h1>
+            <p>Thanks for reaching out — here's exactly what happens next.</p>
+            <ul class="confirm-rows">
+              <li>
+                <span class="mk">✓</span>
+                <span class="what">Message received</span>
+                <span class="when">just now</span>
+              </li>
+              <li>
+                <span class="mk">→</span>
+                <span class="what">A reply from our team</span>
+                <span class="when">within 1 business day</span>
+              </li>
+              <li>
+                <span class="mk">→</span>
+                <span class="what">Your free 30-minute consult</span>
+                <span class="when">we'll propose times</span>
+              </li>
+            </ul>
+            <div class="confirm-actions">
+              <a href="index-prairie.html" class="button">Return to home</a>
+              <p class="confirm-direct">In a hurry? Call <a href="tel:+17802468079">+1 780-246-8079</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>Kyntrix Technology Solutions Ltd. · Edmonton, AB · Treaty 6 · <a href="mailto:info@kyntrixtech.com">info@kyntrixtech.com</a></p>
+        <p class="footer-meta">© <span id="year"></span> KYNTRIX</p>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>

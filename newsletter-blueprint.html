@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="theme-switcher.js"></script>
+    <title>Newsletter | KYNTRIX — Document register</title>
+    <meta name="description" content="The Kyntrix monthly newsletter — every issue logged and downloadable, drawing-register style." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --paper: #eef3f7;
+        --sheet: #ffffff;
+        --gridline: #d7e2ec;
+        --cyan: #1d4e89;
+        --cyan-deep: #143a68;
+        --ink: #1a2833;
+        --ink-soft: #4d5d6a;
+        --redline: #c6301c;
+        --rule: #c2d2df;
+        --head: "Archivo", "Segoe UI", Arial, sans-serif;
+        --body: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+        --mono: "IBM Plex Mono", "Courier New", monospace;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: var(--body); font-size: 1.0425rem; line-height: 1.65; color: var(--ink);
+        background:
+          repeating-linear-gradient(0deg, var(--gridline) 0 1px, transparent 1px 28px),
+          repeating-linear-gradient(90deg, var(--gridline) 0 1px, transparent 1px 28px),
+          var(--paper);
+      }
+      .container { width: min(1120px, 92%); margin: 0 auto; }
+      a { color: inherit; }
+      :focus-visible { outline: 3px solid var(--redline); outline-offset: 3px; }
+      h1, h2, h3 { font-family: var(--head); line-height: 1.12; }
+
+      .sheet-tag {
+        font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+        color: var(--cyan); display: flex; gap: 1.5rem; flex-wrap: wrap;
+        border-top: 2px solid var(--ink); padding-top: 0.6rem; margin-bottom: 1.5rem;
+      }
+      .sheet-tag .rev { color: var(--redline); }
+      .sr-only {
+        position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+        overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+      }
+
+      .sheet {
+        background: var(--sheet); border: 1px solid var(--rule);
+        box-shadow: 0 1px 0 rgba(20, 40, 60, 0.06);
+        padding: 3rem clamp(1.5rem, 4vw, 3.5rem); margin: 2.5rem auto;
+      }
+
+      .button {
+        display: inline-block; font-family: var(--head); font-weight: 600; font-size: 0.9rem;
+        padding: 0.55rem 1.1rem; border: 2px solid var(--cyan); background: var(--cyan); color: #fff;
+        text-decoration: none; cursor: pointer;
+        transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+      }
+      .button:hover { background: var(--cyan-deep); border-color: var(--cyan-deep); transform: translateY(-2px); }
+      .button.ghost { background: transparent; color: var(--cyan); }
+      .button.ghost:hover { background: rgba(29, 78, 137, 0.08); }
+
+      /* Header */
+      .site-header { position: sticky; top: 0; z-index: 100; background: var(--sheet); border-bottom: 2px solid var(--ink); }
+      .header-content { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; }
+      .logo {
+        font-family: var(--head); font-weight: 800; font-size: 1.2rem; letter-spacing: 0.1em;
+        text-decoration: none; color: var(--ink); display: flex; flex-direction: column; line-height: 1.1;
+      }
+      .logo small { font-family: var(--mono); font-weight: 400; font-size: 0.6rem; letter-spacing: 0.18em; color: var(--cyan); }
+      .nav-links { display: flex; align-items: center; gap: 1.6rem; }
+      .nav-links a { font-family: var(--mono); font-size: 0.82rem; letter-spacing: 0.04em; color: var(--ink-soft); text-decoration: none; }
+      .nav-links a:hover { color: var(--cyan); }
+      .nav-links a.active { color: var(--redline); }
+      .nav-links a.cta { background: var(--cyan); color: #fff; padding: 0.55rem 1rem; }
+      .nav-links a.cta:hover { background: var(--cyan-deep); color: #fff; }
+      .menu-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.4rem; }
+      .menu-toggle span { display: block; width: 22px; height: 2px; background: var(--ink); margin: 5px 0; transition: transform 0.25s ease, opacity 0.25s ease; }
+
+      /* Hero */
+      @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+      .hero { padding: 3.5rem 0 0; }
+      .hero-sheet { background: var(--sheet); border: 1px solid var(--rule); padding: clamp(2rem, 5vw, 3.5rem); }
+      .hero-sheet > * { opacity: 0; animation: rise 0.55s ease forwards; }
+      .dim {
+        font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+        color: var(--cyan); display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem;
+        animation-delay: 0.1s;
+      }
+      .dim::before, .dim::after { content: ""; flex: 1; height: 9px; border-left: 1px solid var(--cyan); background: linear-gradient(var(--cyan), var(--cyan)) center / 100% 1px no-repeat; }
+      .dim::after { border-left: none; border-right: 1px solid var(--cyan); }
+      .hero h1 { font-size: clamp(2rem, 4.6vw, 3.2rem); font-weight: 800; text-transform: uppercase; margin-bottom: 1rem; animation-delay: 0.22s; }
+      .hero .hero-subtitle { color: var(--ink-soft); max-width: 56ch; animation-delay: 0.36s; }
+
+      /* Register table */
+      h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; text-transform: uppercase; }
+      .register { margin-top: 2rem; width: 100%; border-collapse: collapse; }
+      .register th {
+        font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+        color: var(--ink-soft); text-align: left; padding: 0.6rem 0.9rem; border-bottom: 2px solid var(--ink);
+      }
+      .register td { padding: 0.95rem 0.9rem; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+      .register tr { transition: background-color 0.25s ease; }
+      .register tbody tr:hover { background: var(--paper); }
+      .register .no { font-family: var(--mono); font-size: 0.8rem; color: var(--cyan); white-space: nowrap; }
+      .register .issue { font-family: var(--head); font-weight: 700; }
+      .register .status { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); white-space: nowrap; }
+      .register .status.current { color: var(--redline); font-weight: 500; }
+      .register .dl { text-align: right; }
+
+      .subscribe-note { margin-top: 1.75rem; font-size: 0.95rem; color: var(--ink-soft); }
+      .subscribe-note a { color: var(--cyan); font-weight: 600; }
+
+      /* Preview */
+      .preview-frame { margin-top: 2rem; border: 1.5px solid var(--ink); }
+      .preview-frame iframe { display: block; width: 100%; height: 640px; border: 0; }
+      .preview-caption {
+        font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+        color: var(--ink-soft); margin-top: 0.8rem; text-align: right;
+      }
+      .preview-caption em { color: var(--redline); font-style: normal; }
+
+      /* Footer title block */
+      .site-footer { padding: 1rem 0 2.5rem; }
+      .title-block { background: var(--sheet); border: 2px solid var(--ink); display: grid; grid-template-columns: repeat(4, 1fr); }
+      .tb-cell { padding: 0.9rem 1.1rem; border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
+      .tb-cell:nth-child(4n) { border-right: none; }
+      .tb-cell.wide { grid-column: span 2; }
+      .tb-label { display: block; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 0.15rem; }
+      .tb-value { font-size: 0.92rem; font-weight: 500; }
+      .tb-value a { color: var(--cyan); }
+      .tb-row-last .tb-cell { border-bottom: none; }
+      .land-acknowledgement { max-width: 76ch; margin-top: 2rem; font-size: 0.88rem; line-height: 1.8; color: var(--ink-soft); }
+      .land-acknowledgement strong { color: var(--ink); }
+      .footer-meta { margin-top: 1.5rem; font-family: var(--mono); font-size: 0.75rem; color: var(--ink-soft); }
+
+      .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.55s ease, transform 0.55s ease; }
+      .reveal.is-visible { opacity: 1; transform: none; }
+
+      /* register rows surface one by one */
+      .register tbody tr { opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease var(--d, 0ms), transform 0.5s ease var(--d, 0ms); }
+      .sheet.is-visible .register tbody tr { opacity: 1; transform: none; }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .reveal, .register tbody tr { opacity: 1; transform: none; transition: none; }
+        .hero-sheet > * { animation: none; opacity: 1; transform: none; }
+        .button:hover { transform: none; }
+        * { transition-duration: 0.01ms !important; }
+      }
+
+      @media (max-width: 780px) {
+        .register .status { display: none; }
+        .preview-frame iframe { height: 480px; }
+        .title-block { grid-template-columns: 1fr 1fr; }
+        .tb-cell:nth-child(4n) { border-right: 1px solid var(--ink); }
+        .tb-cell:nth-child(2n) { border-right: none; }
+      }
+      @media (max-width: 680px) {
+        .sheet { padding: 2.25rem 1.25rem; }
+        .menu-toggle { display: block; }
+        .header-content { position: relative; }
+        .nav-links {
+          display: none; position: absolute; top: 100%; left: -4.5%; right: -4.5%;
+          flex-direction: column; align-items: stretch; gap: 0;
+          background: var(--sheet); border-bottom: 2px solid var(--ink); padding: 0.5rem 4.5%;
+        }
+        .nav-links.active { display: flex; }
+        .nav-links a { padding: 0.85rem 0; }
+        .nav-links a.cta { text-align: center; margin: 0.5rem 0 1rem; }
+        .menu-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .title-block { grid-template-columns: 1fr; }
+        .tb-cell, .tb-cell:nth-child(4n), .tb-cell:nth-child(2n) { border-right: none; }
+        .tb-cell.wide { grid-column: span 1; }
+        .register .no { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-content">
+        <a class="logo" href="index-blueprint.html">KYNTRIX <small>TECHNOLOGY SOLUTIONS LTD.</small></a>
+        <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+        <nav class="nav-links">
+          <a href="index-blueprint.html#services">Services</a>
+          <a href="index-blueprint.html#who">Who we serve</a>
+          <a href="index-blueprint.html#process">Process</a>
+          <a href="index-blueprint.html#cases">Case studies</a>
+          <a href="newsletter-blueprint.html" class="active" aria-current="page">Newsletter</a>
+          <a href="index-blueprint.html#contact" class="cta">Book a free consult</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container">
+          <div class="hero-sheet">
+            <p class="dim">Document register · issued monthly</p>
+            <h1>The monthly transmittal.</h1>
+            <p class="hero-subtitle">
+              Technology trends and plain-language insights from the Kyntrix
+              bench, logged and filed every month. Current issue previewed
+              below; the full register follows.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SHEET N-01: register -->
+      <section class="container">
+        <div class="sheet reveal">
+          <p class="sheet-tag"><span>Sheet N-01</span><span>Issue register</span><span class="rev">Latest: May 2026</span></p>
+          <h2>Every issue, logged.</h2>
+          <table class="register">
+            <thead>
+              <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Issue</th>
+                <th scope="col">Status</th>
+                <th scope="col"><span class="sr-only">Download</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="no">TX-05</td>
+                <td class="issue">May 2026</td>
+                <td class="status current">Current</td>
+                <td class="dl"><a href="newsletter/202605.pdf" class="button" download>Download PDF</a></td>
+              </tr>
+              <tr>
+                <td class="no">TX-04</td>
+                <td class="issue">April 2026</td>
+                <td class="status">Issued</td>
+                <td class="dl"><a href="newsletter/202604.pdf" class="button ghost" download>Download PDF</a></td>
+              </tr>
+              <tr>
+                <td class="no">TX-03</td>
+                <td class="issue">March 2026</td>
+                <td class="status">Issued</td>
+                <td class="dl"><a href="newsletter/202603.pdf" class="button ghost" download>Download PDF</a></td>
+              </tr>
+              <tr>
+                <td class="no">TX-02</td>
+                <td class="issue">February 2026</td>
+                <td class="status">Issued</td>
+                <td class="dl"><a href="newsletter/202602.pdf" class="button ghost" download>Download PDF</a></td>
+              </tr>
+              <tr>
+                <td class="no">TX-01</td>
+                <td class="issue">January 2026</td>
+                <td class="status">Issued</td>
+                <td class="dl"><a href="newsletter/202601.pdf" class="button ghost" download>Download PDF</a></td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="subscribe-note">
+            Want each transmittal in your inbox? <a href="index-blueprint.html#contact">Send us a note</a> and we'll add you to the distribution list.
+          </p>
+        </div>
+      </section>
+
+      <!-- SHEET N-02: preview -->
+      <section class="container">
+        <div class="sheet reveal">
+          <p class="sheet-tag"><span>Sheet N-02</span><span>Current issue preview</span><span class="rev">May 2026</span></p>
+          <h2>Read it here.</h2>
+          <div class="preview-frame">
+            <iframe src="newsletter/202605.pdf" title="May 2026 newsletter preview"></iframe>
+          </div>
+          <p class="preview-caption">FIG. 1 — ISSUE TX-05 · <em>if the preview fails, use the register above</em></p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="title-block">
+          <div class="tb-cell wide">
+            <span class="tb-label">Project</span>
+            <span class="tb-value">Kyntrix Technology Solutions Ltd.</span>
+          </div>
+          <div class="tb-cell">
+            <span class="tb-label">Location</span>
+            <span class="tb-value">Edmonton, AB · Treaty 6</span>
+          </div>
+          <div class="tb-cell">
+            <span class="tb-label">Rev</span>
+            <span class="tb-value">A — issued for use</span>
+          </div>
+          <div class="tb-row-last tb-cell wide">
+            <span class="tb-label">Address</span>
+            <span class="tb-value">9538, 107 Ave, Edmonton AB, T5H 0T7</span>
+          </div>
+          <div class="tb-row-last tb-cell">
+            <span class="tb-label">Contact</span>
+            <span class="tb-value"><a href="mailto:info@kyntrixtech.com">info@kyntrixtech.com</a><br /><a href="tel:+17802468079">+1 780-246-8079</a></span>
+          </div>
+          <div class="tb-row-last tb-cell">
+            <span class="tb-label">Elsewhere</span>
+            <span class="tb-value"><a href="https://www.facebook.com/share/1Dvo37dr7r/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">Facebook</a><br /><a href="index-blueprint.html">Home</a></span>
+          </div>
+        </div>
+        <p class="land-acknowledgement"><strong>The land:</strong> We respectfully acknowledge that Kyntrix Technology Solutions Ltd. is in Treaty 6 and on the traditional lands of the Cree, Blackfoot, Iroquois, Dene (DEN–Ē), Nakota Sioux, Métis and Saulteaux (SO-TO), Anishinaabe (ANISH-A-NAUBY) /Ojibway (OJIB-WĒ) nations. This is also the area of Métis homelands and Métis Nation of Alberta Region 4. We acknowledge and respect the past, present, and future generations of all First Nations, Inuit and Métis People who continue to strengthen our community.</p>
+        <p class="footer-meta">© <span id="year"></span> KYNTRIX. ALL RIGHTS RESERVED. · DRAWN WITH CARE IN EDMONTON.</p>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      (function () {
+        var toggle = document.querySelector(".menu-toggle");
+        var nav = document.querySelector(".nav-links");
+        if (!toggle || !nav) return;
+        toggle.addEventListener("click", function () {
+          var open = nav.classList.toggle("active");
+          toggle.classList.toggle("active", open);
+          toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+      })();
+
+      // Stagger register rows
+      (function () {
+        document.querySelectorAll(".register tbody tr").forEach(function (el, i) {
+          el.style.setProperty("--d", (i * 80) + "ms");
+        });
+      })();
+
+      (function () {
+        var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var items = document.querySelectorAll(".reveal");
+        if (reduced || !("IntersectionObserver" in window)) {
+          items.forEach(function (el) { el.classList.add("is-visible"); });
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) { entry.target.classList.add("is-visible"); io.unobserve(entry.target); }
+          });
+        }, { threshold: 0.1 });
+        items.forEach(function (el) { io.observe(el); });
+      })();
+    </script>
+  </body>
+</html>

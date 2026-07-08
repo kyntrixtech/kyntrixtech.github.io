@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="theme-switcher.js"></script>
+    <title>Inquiry received | KYNTRIX</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --paper: #eef3f7;
+        --sheet: #ffffff;
+        --gridline: #d7e2ec;
+        --cyan: #1d4e89;
+        --cyan-deep: #143a68;
+        --ink: #1a2833;
+        --ink-soft: #4d5d6a;
+        --redline: #c6301c;
+        --rule: #c2d2df;
+        --head: "Archivo", "Segoe UI", Arial, sans-serif;
+        --body: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+        --mono: "IBM Plex Mono", "Courier New", monospace;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: var(--body); font-size: 1.0425rem; line-height: 1.65; color: var(--ink);
+        background:
+          repeating-linear-gradient(0deg, var(--gridline) 0 1px, transparent 1px 28px),
+          repeating-linear-gradient(90deg, var(--gridline) 0 1px, transparent 1px 28px),
+          var(--paper);
+        min-height: 100vh; display: flex; flex-direction: column;
+      }
+      .container { width: min(1120px, 92%); margin: 0 auto; }
+      a { color: inherit; }
+      :focus-visible { outline: 3px solid var(--redline); outline-offset: 3px; }
+      h1 { font-family: var(--head); line-height: 1.12; }
+
+      .site-header { background: var(--sheet); border-bottom: 2px solid var(--ink); }
+      .header-content { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; }
+      .logo {
+        font-family: var(--head); font-weight: 800; font-size: 1.2rem; letter-spacing: 0.1em;
+        text-decoration: none; color: var(--ink); display: flex; flex-direction: column; line-height: 1.1;
+      }
+      .logo small { font-family: var(--mono); font-weight: 400; font-size: 0.6rem; letter-spacing: 0.18em; color: var(--cyan); }
+      .back-link { font-family: var(--mono); font-size: 0.82rem; color: var(--ink-soft); text-decoration: none; }
+      .back-link:hover { color: var(--cyan); }
+
+      main { flex: 1; display: flex; align-items: center; padding: 4rem 0; }
+
+      @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+      .receipt {
+        position: relative;
+        background: var(--sheet); border: 1px solid var(--rule);
+        box-shadow: 0 1px 0 rgba(20, 40, 60, 0.06);
+        max-width: 36rem; margin: 0 auto; padding: clamp(2rem, 5vw, 3rem);
+        opacity: 0; animation: rise 0.55s ease forwards 0.1s;
+      }
+      .sheet-tag {
+        font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+        color: var(--cyan); display: flex; gap: 1.5rem; flex-wrap: wrap;
+        border-top: 2px solid var(--ink); padding-top: 0.6rem; margin-bottom: 1.4rem;
+      }
+      .receipt h1 { font-size: clamp(1.6rem, 3.4vw, 2.2rem); font-weight: 800; text-transform: uppercase; margin-bottom: 0.8rem; }
+      .receipt > p { color: var(--ink-soft); max-width: 46ch; }
+
+      /* the RECEIVED stamp */
+      .stamp {
+        position: absolute; top: 1.5rem; right: 1.5rem;
+        font-family: var(--head); font-weight: 800; font-size: 1.05rem; letter-spacing: 0.14em;
+        color: var(--redline); border: 3px solid var(--redline); border-radius: 4px;
+        padding: 0.3rem 0.9rem; text-transform: uppercase;
+        transform: rotate(-8deg);
+        opacity: 0;
+        animation: stamp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.7s;
+      }
+      @keyframes stamp {
+        from { opacity: 0; transform: rotate(-8deg) scale(1.8); }
+        to { opacity: 0.92; transform: rotate(-8deg) scale(1); }
+      }
+
+      .log { list-style: none; margin-top: 1.6rem; border-top: 1px solid var(--rule); }
+      .log li {
+        display: grid; grid-template-columns: 6.5rem 1fr; gap: 1rem;
+        padding: 0.8rem 0; border-bottom: 1px solid var(--rule);
+        font-size: 0.95rem;
+        opacity: 0; animation: rise 0.45s ease forwards;
+      }
+      .log li:nth-child(1) { animation-delay: 0.9s; }
+      .log li:nth-child(2) { animation-delay: 1.05s; }
+      .log li:nth-child(3) { animation-delay: 1.2s; }
+      .log .k { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); padding-top: 0.2rem; }
+      .log .v { font-weight: 500; }
+      .log .v em { font-style: normal; color: var(--redline); font-family: var(--mono); font-size: 0.85rem; }
+
+      .actions { margin-top: 1.8rem; display: flex; gap: 1.1rem; align-items: center; flex-wrap: wrap; }
+      .button {
+        display: inline-block; font-family: var(--head); font-weight: 600; font-size: 0.95rem;
+        padding: 0.75rem 1.4rem; border: 2px solid var(--cyan); background: var(--cyan); color: #fff;
+        text-decoration: none; transition: background-color 0.2s ease, transform 0.2s ease;
+      }
+      .button:hover { background: var(--cyan-deep); transform: translateY(-2px); }
+      .direct { font-size: 0.9rem; color: var(--ink-soft); }
+      .direct a { color: var(--cyan); font-weight: 600; }
+
+      .site-footer { padding: 1.5rem 0 2rem; font-size: 0.85rem; color: var(--ink-soft); }
+      .footer-inner { display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap; border-top: 2px solid var(--ink); padding-top: 1rem; }
+      .site-footer a { color: var(--cyan); }
+      .footer-meta { font-family: var(--mono); font-size: 0.72rem; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .receipt, .log li { animation: none; opacity: 1; transform: none; }
+        .stamp { animation: none; opacity: 0.92; transform: rotate(-8deg); }
+        .button:hover { transform: none; }
+        * { transition-duration: 0.01ms !important; }
+      }
+      @media (max-width: 560px) {
+        .stamp { position: static; display: inline-block; margin-bottom: 1rem; }
+        .log li { grid-template-columns: 1fr; gap: 0.1rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-content">
+        <a class="logo" href="index-blueprint.html">KYNTRIX <small>TECHNOLOGY SOLUTIONS LTD.</small></a>
+        <a class="back-link" href="index-blueprint.html">&larr; BACK TO HOME</a>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <div class="receipt">
+          <span class="stamp" aria-hidden="true">Received</span>
+          <p class="sheet-tag"><span>Transmittal receipt</span><span>Inquiry</span></p>
+          <h1>Your inquiry is logged.</h1>
+          <p>Thanks for reaching out — it's on the board. Here's the record:</p>
+          <ul class="log">
+            <li>
+              <span class="k">Status</span>
+              <span class="v">Received and queued for review <em>· just now</em></span>
+            </li>
+            <li>
+              <span class="k">Next action</span>
+              <span class="v">A reply from our team <em>· within 1 business day</em></span>
+            </li>
+            <li>
+              <span class="k">Then</span>
+              <span class="v">Your free 30-minute consult — we'll propose times</span>
+            </li>
+          </ul>
+          <div class="actions">
+            <a href="index-blueprint.html" class="button">Return to home</a>
+            <p class="direct">In a hurry? Call <a href="tel:+17802468079">+1 780-246-8079</a></p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>Kyntrix Technology Solutions Ltd. · Edmonton, AB · Treaty 6 · <a href="mailto:info@kyntrixtech.com">info@kyntrixtech.com</a></p>
+        <p class="footer-meta">© <span id="year"></span> KYNTRIX</p>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>

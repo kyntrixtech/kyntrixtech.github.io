@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="theme-switcher.js"></script>
+    <title>Your note is on our desk | Kyntrix</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --spruce: #1e3a31;
+        --spruce-deep: #14291f;
+        --paper: #ffffff;
+        --mist: #f2f5f1;
+        --ink: #20302a;
+        --ink-soft: #52635b;
+        --rose: #b34a5e;
+        --rose-deep: #96394c;
+        --sage: #a8bfb2;
+        --line: #dbe3dc;
+        --line-dark: rgba(168, 191, 178, 0.28);
+        --display: "Fraunces", Georgia, serif;
+        --body: "Karla", "Segoe UI", Arial, sans-serif;
+        --radius: 10px;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: var(--body); font-size: 1.0625rem; line-height: 1.7; color: var(--ink);
+        background: linear-gradient(180deg, var(--spruce) 0%, var(--spruce-deep) 100%);
+        min-height: 100vh; display: flex; flex-direction: column;
+      }
+      .container { width: min(1080px, 92%); margin: 0 auto; }
+      a { color: inherit; }
+      :focus-visible { outline: 3px solid var(--rose); outline-offset: 3px; border-radius: 3px; }
+
+      .site-header { background: var(--spruce); border-bottom: 1px solid var(--line-dark); }
+      .header-content { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 0; }
+      .logo { font-family: var(--display); font-weight: 700; font-size: 1.3rem; color: #fff; text-decoration: none; }
+      .logo .rose-dot { color: var(--rose); }
+      .back-link { font-size: 0.95rem; font-weight: 700; color: var(--sage); text-decoration: none; }
+      .back-link:hover { color: #fff; }
+
+      main { flex: 1; display: flex; align-items: center; padding: 4rem 0; }
+
+      @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+      /* the reply letter */
+      .reply {
+        background: var(--paper); max-width: 38rem; margin: 0 auto;
+        border-radius: var(--radius); padding: clamp(2rem, 5vw, 3.25rem);
+        box-shadow: 0 30px 70px rgba(8, 20, 14, 0.5);
+        opacity: 0; animation: rise 0.7s ease forwards 0.15s;
+      }
+      .reply > * { opacity: 0; animation: rise 0.55s ease forwards; }
+      .reply > *:nth-child(1) { animation-delay: 0.5s; }
+      .reply > *:nth-child(2) { animation-delay: 0.68s; }
+      .reply > *:nth-child(3) { animation-delay: 0.86s; }
+      .reply > *:nth-child(4) { animation-delay: 1.04s; }
+      .reply > *:nth-child(5) { animation-delay: 1.22s; }
+
+      .salutation { font-family: var(--display); font-size: 1.25rem; font-weight: 600; margin-bottom: 1.3rem; }
+      .salutation em { font-style: normal; color: var(--rose-deep); }
+      .reply p.body-line { font-family: var(--display); font-weight: 400; font-size: 1.1rem; line-height: 1.75; margin-bottom: 1.2rem; }
+      .signoff { font-family: var(--display); font-size: 1.1rem; margin-top: 1.6rem; }
+      .signoff strong { font-weight: 700; }
+      .ps { margin-top: 1.8rem; padding-top: 1.5rem; border-top: 1px solid var(--line); font-size: 0.97rem; color: var(--ink-soft); }
+      .ps strong { color: var(--ink); }
+      .ps a { color: var(--rose-deep); font-weight: 700; }
+      .ps .actions { margin-top: 1.2rem; }
+
+      .button {
+        display: inline-block; font-weight: 700; font-size: 1rem; padding: 0.8rem 1.6rem;
+        border-radius: 999px; text-decoration: none;
+        background: var(--rose); color: #fff;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+      }
+      .button:hover { background: var(--rose-deep); transform: translateY(-2px); }
+
+      .site-footer { color: var(--sage); padding: 2rem 0; font-size: 0.85rem; border-top: 1px solid var(--line-dark); }
+      .footer-inner { display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+      .site-footer a { color: #fff; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .reply, .reply > * { animation: none; opacity: 1; transform: none; }
+        .button:hover { transform: none; }
+        * { transition-duration: 0.01ms !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-content">
+        <a class="logo" href="index-wildrose.html">Kyntrix<span class="rose-dot">.</span></a>
+        <a class="back-link" href="index-wildrose.html">&larr; Back to home</a>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <div class="reply">
+          <p class="salutation">Dear friend <em>—</em></p>
+          <p class="body-line">
+            Your note is on our desk. Thank you for writing: telling a
+            stranger what's slow, broken, or missing in your organization
+            takes a little trust, and we don't take it lightly.
+          </p>
+          <p class="body-line">
+            Someone from our team — a person, not an autoresponder — will
+            reply within one business day with a few times for your free
+            30-minute consultation.
+          </p>
+          <p class="signoff">Talk soon,<br /><strong>the Kyntrix team</strong></p>
+          <div class="ps">
+            <p><strong>P.S.</strong> If it can't wait a day, call <a href="tel:+17802468079">+1 780-246-8079</a> — we answer the phone.</p>
+            <p class="actions"><a href="index-wildrose.html" class="button">Return to home</a></p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>Kyntrix Technology Solutions Ltd. · Edmonton, AB · Treaty 6 · <a href="mailto:info@kyntrixtech.com">info@kyntrixtech.com</a></p>
+        <p>© <span id="year"></span> Kyntrix</p>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
