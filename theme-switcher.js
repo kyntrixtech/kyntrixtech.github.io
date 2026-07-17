@@ -89,6 +89,7 @@
       ".ktw-check{display:none}" +
       ".ktw-option[aria-selected='true'] .ktw-check{display:inline}" +
       ".ktw-toggle:focus-visible,.ktw-option:focus-visible{outline:2px solid #fff;outline-offset:2px}" +
+      "@media(max-width:480px){.ktw{right:10px;right:calc(10px + env(safe-area-inset-right));bottom:10px;bottom:calc(10px + env(safe-area-inset-bottom))}.ktw-toggle{width:44px;height:44px;justify-content:center;padding:0}.ktw-toggle>span:not(.ktw-dot){display:none}.ktw-menu{max-width:calc(100vw - 20px)}}" +
       "@media print{.ktw{display:none}}";
     var style = document.createElement("style");
     style.textContent = css;
@@ -102,6 +103,7 @@
     toggle.className = "ktw-toggle";
     toggle.setAttribute("aria-haspopup", "listbox");
     toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-label", "Choose site theme. Current theme: " + THEMES[current.theme].label);
     toggle.innerHTML =
       "<span class='ktw-dot' style='background:" + THEMES[current.theme].dot +
       ";border-color:" + THEMES[current.theme].ring + "'></span>" +

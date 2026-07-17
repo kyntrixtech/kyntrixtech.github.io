@@ -161,14 +161,15 @@
         .tb-cell:nth-child(4n) { border-right: 1px solid var(--ink); }
         .tb-cell:nth-child(2n) { border-right: none; }
       }
-      @media (max-width: 680px) {
-        .sheet { padding: 2.25rem 1.25rem; }
+      @media (max-width: 840px) {
         .menu-toggle { display: block; }
-        .header-content { position: relative; }
+        .header-content { position: static; }
         .nav-links {
-          display: none; position: absolute; top: 100%; left: -4.5%; right: -4.5%;
+          display: none; position: absolute; top: 100%; left: 0; right: 0;
+          width: 100%; max-width: 100%;
           flex-direction: column; align-items: stretch; gap: 0;
-          background: var(--sheet); border-bottom: 2px solid var(--ink); padding: 0.5rem 4.5%;
+          background: var(--sheet); border-bottom: 2px solid var(--ink); padding: 0.5rem 4%;
+          max-height: calc(100vh - 4.5rem); overflow-y: auto;
         }
         .nav-links.active { display: flex; }
         .nav-links a { padding: 0.85rem 0; }
@@ -176,10 +177,31 @@
         .menu-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
         .menu-toggle.active span:nth-child(2) { opacity: 0; }
         .menu-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+      }
+      @media (max-width: 680px) {
+        .sheet { padding: 2.25rem 1.25rem; }
         .title-block { grid-template-columns: 1fr; }
         .tb-cell, .tb-cell:nth-child(4n), .tb-cell:nth-child(2n) { border-right: none; }
         .tb-cell.wide { grid-column: span 1; }
         .register .no { display: none; }
+      }
+      @media (max-width: 480px) {
+        .sheet { padding: 2rem 0.75rem; }
+        .hero h1 { font-size: clamp(1.75rem, 8vw, 2rem); overflow-wrap: anywhere; }
+        .register { table-layout: fixed; }
+        .register th:first-child,
+        .register th:nth-child(3),
+        .register .no,
+        .register .status { display: none; }
+        .register th, .register td { padding-left: 0.3rem; padding-right: 0.3rem; }
+        .register .issue { overflow-wrap: anywhere; }
+        .register th:last-child, .register .dl { width: 7rem; }
+        .register .button {
+          max-width: 100%;
+          padding: 0.45rem 0.55rem;
+          font-size: 0.78rem;
+          white-space: nowrap;
+        }
       }
     </style>
   </head>

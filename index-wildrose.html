@@ -417,23 +417,25 @@
         .case-grid, .contact-card, .footer-grid { grid-template-columns: 1fr; }
         .metrics { grid-template-columns: 1fr; gap: 1.9rem; }
       }
-      @media (max-width: 680px) {
-        .section { padding: 4rem 0; }
-        .who-grid { grid-template-columns: 1fr; }
+      @media (max-width: 840px) {
         .menu-toggle { display: block; }
-        .header-content { position: relative; }
+        .header-content { position: static; }
         .nav-links {
           display: none;
           position: absolute;
           top: 100%;
-          left: -4.5%;
-          right: -4.5%;
+          left: 0;
+          right: 0;
+          width: 100%;
+          max-width: 100%;
           flex-direction: column;
           align-items: stretch;
           gap: 0;
           background: var(--spruce-deep);
           border-bottom: 1px solid var(--line-dark);
-          padding: 0.5rem 4.5%;
+          padding: 0.5rem 4%;
+          max-height: calc(100vh - 4.5rem);
+          overflow-y: auto;
         }
         .nav-links.active { display: flex; }
         .nav-links a { padding: 0.9rem 0; }
@@ -441,6 +443,10 @@
         .menu-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
         .menu-toggle.active span:nth-child(2) { opacity: 0; }
         .menu-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+      }
+      @media (max-width: 680px) {
+        .section { padding: 4rem 0; }
+        .who-grid { grid-template-columns: 1fr; }
       }
     </style>
   </head>

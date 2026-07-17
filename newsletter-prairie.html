@@ -89,13 +89,15 @@
 
       /* Issue layout */
       .issue-section { padding: 5rem 0; }
-      .issue-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 3.5rem; align-items: start; margin-top: 2.5rem; }
+      .issue-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 3.5rem; align-items: start; margin-top: 2.5rem; }
+      .issue-grid > * { min-width: 0; }
 
       .preview-card { background: var(--snow); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
       .preview-head {
         display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
         padding: 1rem 1.4rem; background: var(--paper); border-bottom: 2px solid var(--wheat);
       }
+      .preview-head > * { min-width: 0; }
       .preview-head .pv-title { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; }
       .preview-head .pv-date { font-size: 0.85rem; color: var(--ink-soft); }
       .preview-card iframe { display: block; width: 100%; height: 620px; border: 0; }
@@ -106,7 +108,7 @@
       .archive-lead { color: var(--ink-soft); font-size: 0.97rem; }
       .archive-list { list-style: none; margin-top: 1.5rem; border-top: 1px solid var(--line); }
       .archive-list li {
-        display: grid; grid-template-columns: 4.2rem 1fr auto; gap: 1rem; align-items: center;
+        display: grid; grid-template-columns: 4.2rem minmax(0, 1fr) auto; gap: 1rem; align-items: center;
         padding: 1.05rem 0; border-bottom: 1px solid var(--line);
         transition: background-color 0.25s ease;
       }
@@ -147,11 +149,11 @@
         .footer-grid { grid-template-columns: 1fr; }
         .preview-card iframe { height: 480px; }
       }
-      @media (max-width: 680px) {
+      @media (max-width: 840px) {
         .menu-toggle { display: block; }
         .header-content { position: relative; }
         .nav-links {
-          display: none; position: absolute; top: 100%; left: -4.5%; right: -4.5%;
+          display: none; position: absolute; top: 100%; left: calc(50% - 50vw); right: calc(50% - 50vw);
           flex-direction: column; align-items: stretch; gap: 0;
           background: var(--midnight-2); border-bottom: 1px solid var(--line-dark); padding: 0.5rem 4.5%;
         }
@@ -162,6 +164,11 @@
         .menu-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
         .menu-toggle.active span:nth-child(2) { opacity: 0; }
         .menu-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+      }
+      @media (max-width: 480px) {
+        .preview-head { flex-wrap: wrap; align-items: flex-start; }
+        .archive-list li { grid-template-columns: 1fr; gap: 0.5rem; align-items: start; }
+        .archive-list li .button { justify-self: start; }
       }
     </style>
   </head>

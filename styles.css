@@ -137,7 +137,7 @@ html {
 }
 
 /* Mobile navigation */
-@media (max-width: 768px) {
+@media (max-width: 840px) {
   .menu-toggle {
     display: flex;
   }
@@ -145,7 +145,7 @@ html {
   .nav-links {
     position: fixed;
     top: 0;
-    right: -100%;
+    right: 0;
     width: 80%;
     max-width: 300px;
     height: 100vh;
@@ -155,12 +155,18 @@ html {
     background: #ffffff;
     box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
     padding: 2rem;
-    transition: right 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
     z-index: 99;
   }
   
   .nav-links.active {
-    right: 0;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
   }
   
   .nav-links a {
@@ -173,6 +179,36 @@ html {
     margin-top: 2rem;
     width: 100%;
     text-align: center;
+  }
+
+  .nav-links.static-nav {
+    position: static;
+    width: auto;
+    max-width: none;
+    height: auto;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+    transform: none;
+    visibility: visible;
+    pointer-events: auto;
+    transition: none;
+    z-index: auto;
+  }
+
+  .nav-links.static-nav a {
+    width: auto;
+    padding: 0.65rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .nav-links.static-nav .cta {
+    margin-top: 0;
+    width: auto;
   }
   
   /* Menu icon animation */
@@ -352,6 +388,7 @@ html {
   padding: 8rem 0;
   background: #fafafa;
   position: relative;
+  overflow: hidden;
 }
 
 .about-us::before {
@@ -392,6 +429,7 @@ html {
   padding: 8rem 0;
   background: #fafafa;
   position: relative;
+  overflow: hidden;
 }
 
 .industries::before {
@@ -631,6 +669,12 @@ html {
   }
 }
 
+/* Approach Section */
+.approach {
+  position: relative;
+  overflow: hidden;
+}
+
 /* Contact Section */
 .contact {
   padding: 10rem 0;
@@ -781,6 +825,7 @@ html {
 .assurance {
   padding: 10rem 0;
   background: #fafafa;
+  overflow: hidden;
 }
 
 .assurance-content {
@@ -1252,6 +1297,22 @@ html {
     gap: 1rem;
   }
 
+  .hero-content,
+  .split,
+  .case-grid,
+  .assurance-content,
+  .contact-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero-content > *,
+  .split > *,
+  .case-grid > *,
+  .assurance-content > *,
+  .contact-card > * {
+    min-width: 0;
+  }
+
   .hero {
     padding: 5rem 0 4rem;
   }
@@ -1298,10 +1359,6 @@ html {
 
   .cases {
     padding: 5rem 0;
-  }
-
-  .case-grid {
-    grid-template-columns: 1fr;
   }
 
   .assurance {
